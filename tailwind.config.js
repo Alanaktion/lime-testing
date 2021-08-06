@@ -18,6 +18,10 @@ module.exports = {
                 lime: colors.lime,
             },
         },
+        container: {
+            padding: '1rem',
+            center: true,
+        },
     },
 
     variants: {
