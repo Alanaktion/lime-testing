@@ -22,7 +22,7 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('test-suites')" :active="route().current('test-suites')">
+                                <jet-nav-link :href="route('test-suites.index')" :active="route().current('test-suites.*')">
                                     Test Suites
                                 </jet-nav-link>
                             </div>
@@ -148,7 +148,7 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('test-suites')" :active="route().current('test-suites')">
+                        <jet-responsive-nav-link :href="route('test-suites.index')" :active="route().current('test-suites.*')">
                             Test Suites
                         </jet-responsive-nav-link>
                     </div>

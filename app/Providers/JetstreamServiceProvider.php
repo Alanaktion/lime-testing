@@ -52,16 +52,17 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::defaultApiTokenPermissions(['read']);
 
         Jetstream::role('admin', 'Administrator', [
+            'admin',
             'create',
             'read',
             'update',
             'delete',
+            'test:run',
         ])->description('Administrator users can perform any action.');
 
-        Jetstream::role('editor', 'Editor', [
+        Jetstream::role('tester', 'Tester', [
             'read',
-            'create',
-            'update',
-        ])->description('Editor users have the ability to read, create, and update.');
+            'test:run',
+        ])->description('Testers can view test suites and run tests.');
     }
 }

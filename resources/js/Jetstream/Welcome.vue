@@ -30,10 +30,10 @@
                     </div>
 
                     <a href="https://laravel.com/docs">
-                        <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
+                        <div class="mt-3 flex items-center text-sm font-semibold text-lime-700">
                             <div>Explore the documentation</div>
 
-                            <div class="ml-1 text-indigo-500">
+                            <div class="ml-1 text-lime-500">
                                 <ArrowRightIcon class="w-4 h-4" />
                             </div>
                         </div>
@@ -53,10 +53,10 @@
                     </div>
 
                     <a href="https://laracasts.com">
-                        <div class="mt-3 flex items-center text-sm font-semibold text-indigo-700">
+                        <div class="mt-3 flex items-center text-sm font-semibold text-lime-700">
                             <div>Start watching Laracasts</div>
 
-                            <div class="ml-1 text-indigo-500">
+                            <div class="ml-1 text-lime-500">
                                 <ArrowRightIcon class="w-4 h-4" />
                             </div>
                         </div>

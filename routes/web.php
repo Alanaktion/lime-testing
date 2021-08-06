@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestSuiteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,8 @@ Route::redirect('/', '/dashboard');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/test-suites', [TestSuiteController::class, 'index'])->name('test-suites');
-Route::post('/test-suites', [TestSuiteController::class, 'store']);
-Route::get('/test-suites/{suite}', [TestSuiteController::class, 'show']);
+Route::resource('test-suites', TestSuiteController::class)
+    ->except(['create', 'edit']);
+Route::resource('test-suites.tests', TestController::class)
+    ->shallow()
+    ->except(['index', 'create', 'edit']);

@@ -6,65 +6,68 @@
             </h2>
         </template>
 
-        <div class="container py-4 lg:py-8">
+        <div class="container py-4">
             <div
                 class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg"
                 v-if="testSuites.length"
             >
                 <div
-                    class="px-6 py-4"
+                    class="flex items-center px-6 py-4"
                     v-for="suite in testSuites"
                     :key="suite.id"
                 >
-                    <Link :href="`/test-suites/${suite.id}`" class="text-indigo-600 font-semibold">
-                        {{ suite.name }}
+                    <div class="mr-auto">
+                        <Link :href="route('test-suites.show', suite.id)" class="font-semibold">
+                            {{ suite.name }}
+                        </Link>
+                        <div class="text-gray-600">{{ suite.tests_count }} tests</div>
+                    </div>
+                    <Link :href="route('test-suites.show', suite.id)" class="text-lime-600" title="Edit">
+                        <span class="sr-only">Edit test suite</span>
+                        <PencilAltIcon class="w-6 h-6" />
                     </Link>
-                    <div class="text-gray-600">{{ suite.tests_count }} tests</div>
+                    <button type="button" @click="run(suite)" class="appearance-none border-0 bg-transparent cursor-pointer text-lime-600 ml-2 md:ml-4" title="Run">
+                        <span class="sr-only">Start a new test run</span>
+                        <PlayIcon class="w-6 h-6" />
+                    </button>
+                </div>
+
+                <div class="border-t bg-gray-50">
+                    <form @submit.prevent="submit" class="sm:flex max-w-md px-6 py-4">
+                        <jet-label for="name" value="Suite name" class="sr-only" />
+                        <jet-input
+                            id="name" type="text" class="w-full"
+                            v-model="form.name"
+                            placeholder="Suite name" required
+                        />
+
+                        <jet-button type="submit" class="mt-2 w-full sm:mt-0 sm:w-auto sm:ml-2 flex-shrink-0">
+                            Create Suite
+                        </jet-button>
+                    </form>
                 </div>
             </div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg py-6 lg:py-12" v-else>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg py-6 lg:py-12 my-8" v-else>
                 <p class="text-center">
                     No test suites
                 </p>
                 <p class="text-gray-600 text-center">
                     Get started by creating your first test suite.
                 </p>
-                <div class="text-center mt-4 lg:mt-6">
-                    <jet-button @click.native="showCreateModal = true">
-                        New test suite
+                <form @submit.prevent="submit" class="sm:flex max-w-md mx-auto mt-6">
+                    <jet-label for="name" value="Suite name" class="sr-only" />
+                    <jet-input
+                        id="name" type="text" class="w-full"
+                        v-model="form.name"
+                        placeholder="Suite name" required autofocus
+                    />
+
+                    <jet-button type="submit" class="mt-2 w-full sm:mt-0 sm:w-auto sm:ml-2 flex-shrink-0">
+                        Create Suite
                     </jet-button>
-                </div>
+                </form>
             </div>
         </div>
-
-        <jet-dialog-modal :show="showCreateModal" @close="showCreateModal = false">
-            <template #title>
-                Create Test Suite
-            </template>
-
-            <template #content>
-                <form @submit.prevent="submit">
-                    <div>
-                        <jet-label for="name" value="Name" />
-                        <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus />
-                    </div>
-
-                    <div class="mt-4">
-                        <jet-label for="description" value="Description" />
-                        <textarea id="description" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" @input="$emit('update:modelValue', $event.target.value)" v-model="form.description"></textarea>
-                    </div>
-                </form>
-            </template>
-
-            <template #footer>
-                <jet-secondary-button @click.native="showCreateModal = false">
-                    Cancel
-                </jet-secondary-button>
-                <jet-button type="submit" class="ml-2" @click.native="submit">
-                    Create
-                </jet-button>
-            </template>
-        </jet-dialog-modal>
     </app-layout>
 </template>
 
@@ -72,10 +75,9 @@
 import { reactive, ref } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import { Link } from '@inertiajs/inertia-vue3'
+import { PencilAltIcon, PlayIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import JetDialogModal from '@/Jetstream/DialogModal.vue'
 import JetButton from '@/Jetstream/Button.vue'
-import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
 import JetInput from '@/Jetstream/Input.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 
@@ -83,10 +85,10 @@ export default {
     props: ['testSuites'],
     components: {
         Link,
+        PencilAltIcon,
+        PlayIcon,
         AppLayout,
-        JetDialogModal,
         JetButton,
-        JetSecondaryButton,
         JetInput,
         JetLabel,
     },
@@ -98,13 +100,18 @@ export default {
         })
 
         const submit = () => {
-            Inertia.post('/test-suites', form)
+            Inertia.post(route('test-suites.store'), form)
+        }
+
+        const run = suite => {
+            //
         }
 
         return {
             showCreateModal,
             form,
             submit,
+            run,
         }
     },
 }

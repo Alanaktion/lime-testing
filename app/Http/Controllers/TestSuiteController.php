@@ -15,7 +15,9 @@ class TestSuiteController extends Controller
 
     public function index()
     {
-        $testSuites = TestSuite::withCount('tests')->get();
+        $testSuites = TestSuite::withCount('tests')
+            ->orderBy('name')
+            ->get();
         return Inertia::render('TestSuites/Index', [
             'testSuites' => $testSuites,
         ]);
@@ -34,13 +36,41 @@ class TestSuiteController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect('test-suites/' . $suite->id);
+        return redirect()->route('test-suites.show', [$suite]);
     }
 
-    public function show(TestSuite $suite)
+    public function update(Request $request, TestSuite $testSuite)
     {
-        return Inertia::render('TestSuites/Show', [
-            'suite' => $suite,
+        $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'nullable|max:4096',
         ]);
+
+        $testSuite->fill([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+        $testSuite->save();
+
+        return redirect()->route('test-suites.show', [$testSuite])
+            ->with('flash.banner', 'Test suite updated successfully.');
+    }
+
+    public function show(TestSuite $testSuite)
+    {
+        $tests = $testSuite->tests()
+            ->orderBy('sort_order')
+            ->get();
+        return Inertia::render('TestSuites/Show', [
+            'suite' => $testSuite,
+            'tests' => $tests,
+        ]);
+    }
+
+    public function destroy(TestSuite $testSuite)
+    {
+        $testSuite->delete();
+        return redirect()->route('test-suites.index')
+            ->with('flash.banner', 'Test suite archived.');
     }
 }

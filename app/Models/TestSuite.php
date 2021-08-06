@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TestSuite extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['name', 'description'];
 
-    public function application()
+    public function team()
     {
-        return $this->belongsTo(Application::class);
+        return $this->belongsTo(Team::class);
     }
 
     public function tests()
