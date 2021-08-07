@@ -25,4 +25,4 @@ Route::resource('test-suites', TestSuiteController::class)
     ->except(['create', 'edit']);
 Route::resource('test-suites.tests', TestController::class)
     ->shallow()
-    ->except(['index', 'create', 'edit']);
+    ->except(['index', 'edit']);

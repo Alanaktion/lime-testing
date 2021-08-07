@@ -8,10 +8,10 @@
                     </Link>
                     <ChevronRightIcon class="h-4 w-4 mt-0.5 text-gray-500 mx-2" />
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        {{ suite.name}}
+                        {{ suite.name }}
                     </h2>
                 </div>
-                <div class="flex mt-3 sm:mt-0 sm:ml-auto">
+                <div class="flex mt-3 sm:ml-auto sm:-my-1">
                     <jet-secondary-button @click="editing = true" class="mr-2">
                         Rename <span class="sr-only">test suite</span>
                     </jet-secondary-button>
@@ -26,8 +26,32 @@
             </div>
         </template>
 
-        <div class="container py-4">
-            No tests added yet.
+        <div class="container py-4 lg:py-6">
+            <div class="flex justify-end mb-3">
+                <a :href="route('test-suites.tests.create', suite.id)" class="inline-flex items-center text-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                    Add Test
+                </a>
+            </div>
+
+            <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
+                <div v-if="tests.length">
+                    <div
+                        class="flex items-center px-6 py-4"
+                        v-for="test in tests"
+                        :key="test.id"
+                    >
+                        <div class="mr-auto">
+                            <Link :href="route('tests.show', test.id)" class="font-semibold">
+                                {{ test.name }}
+                            </Link>
+                            <div class="text-gray-600">{{ test.steps.length }} steps</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center py-6 lg:py-12" v-else>
+                    No tests added yet.
+                </div>
+            </div>
         </div>
 
         <jet-dialog-modal :show="editing" @close="cancel">
@@ -40,26 +64,22 @@
                     <div>
                         <jet-label for="name" value="Name" />
                         <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required />
-                        <div class="text-red-600 mt-2" v-if="form.errors.name">
-                            {{ form.errors.name }}
-                        </div>
+                        <jet-input-error :message="form.errors.name" class="mt-2" />
                     </div>
 
                     <div class="mt-4">
                         <jet-label for="description" value="Description" />
                         <textarea id="description" class="border-gray-300 focus:border-lime-500 focus:ring focus:ring-lime-300 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" v-model="form.description"></textarea>
-                        <div class="text-red-600 mt-2" v-if="form.errors.description">
-                            {{ form.errors.description }}
-                        </div>
+                        <jet-input-error :message="form.errors.description" class="mt-2" />
                     </div>
                 </form>
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="cancel">
+                <jet-secondary-button @click="cancel">
                     Cancel
                 </jet-secondary-button>
-                <jet-button class="ml-2" @click.native="save">
+                <jet-button class="ml-2" @click="save">
                     Save
                 </jet-button>
             </template>
@@ -76,10 +96,11 @@ import JetDialogModal from '@/Jetstream/DialogModal.vue'
 import JetButton from '@/Jetstream/Button.vue'
 import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
 import JetInput from '@/Jetstream/Input.vue'
+import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 
 export default {
-    props: ['suite'],
+    props: ['suite', 'tests'],
     components: {
         Link,
         AppLayout,
@@ -88,6 +109,7 @@ export default {
         JetButton,
         JetSecondaryButton,
         JetInput,
+        JetInputError,
         JetLabel,
     },
     setup(props) {

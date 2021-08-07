@@ -15,7 +15,13 @@ class Test extends Model
         'steps' => 'array',
     ];
 
-    public function suite()
+    protected $fillable = [
+        'name',
+        'description',
+        'steps',
+    ];
+
+    public function testSuite()
     {
         return $this->belongsTo(TestSuite::class);
     }

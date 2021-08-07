@@ -6,7 +6,7 @@
             </h2>
         </template>
 
-        <div class="container py-4">
+        <div class="container py-4 lg:py-6">
             <div
                 class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg"
                 v-if="testSuites.length"

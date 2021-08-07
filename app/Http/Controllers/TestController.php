@@ -14,15 +14,25 @@ class TestController extends Controller
         $this->middleware(['auth:sanctum', 'verified']);
     }
 
+    public function create(TestSuite $testSuite)
+    {
+        return Inertia::render('TestSuites/Tests/Create', [
+            'suite' => $testSuite,
+        ]);
+    }
+
     public function store(Request $request, TestSuite $testSuite)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:4096',
+            'steps' => 'nullable|array',
+            'steps.*' => 'sometimes|string|max:255',
         ]);
         $test = $testSuite->tests()->create($request->only([
             'name',
             'description',
+            'steps',
         ]));
         return redirect()->route('tests.show', $test);
     }
@@ -32,7 +42,7 @@ class TestController extends Controller
         $test->load('testSuite');
         return Inertia::render('TestSuites/Tests/Show', [
             'test' => $test,
-            'testSuite' => $test->testSuite,
+            'suite' => $test->testSuite,
         ]);
     }
 
