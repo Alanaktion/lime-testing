@@ -1,7 +1,7 @@
 <template>
     <app-layout :title="suite.name">
         <template #header>
-            <div class="sm:flex w-full">
+            <div class="sm:flex w-full relative">
                 <div class="flex items-center">
                     <Link :href="route('test-suites.index')" class="font-semibold text-xl text-gray-800 leading-tight">
                         Test Suites
@@ -11,26 +11,22 @@
                         {{ suite.name }}
                     </h2>
                 </div>
-                <div class="flex mt-3 sm:ml-auto sm:-my-1">
+                <div class="flex mt-3 sm:absolute sm:right-0 sm:-my-1">
                     <jet-secondary-button @click="editing = true">
                         Rename <span class="sr-only">test suite</span>
                     </jet-secondary-button>
-                    <button
-                        @click="archive"
-                        type="button"
-                        class="inline-flex items-center px-3 py-2 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition ml-2"
-                    >
+                    <jet-secondary-button @click="archive" class="ml-2">
                         Archive <span class="sr-only">test suite</span>
-                    </button>
+                    </jet-secondary-button>
                 </div>
             </div>
         </template>
 
         <div class="container py-4 lg:py-6">
             <div class="flex justify-end mb-3">
-                <a :href="route('test-suites.tests.create', suite.id)" class="inline-flex items-center text-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                <Link :href="route('test-suites.tests.create', suite.id)" class="btn btn--primary">
                     Add Test
-                </a>
+                </Link>
             </div>
 
             <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
@@ -79,7 +75,7 @@
 
                     <div class="mt-4">
                         <jet-label for="description" value="Description" />
-                        <textarea id="description" class="border-gray-300 focus:border-lime-500 focus:ring focus:ring-lime-300 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" v-model="form.description"></textarea>
+                        <textarea id="description" class="input" v-model="form.description"></textarea>
                         <jet-input-error :message="form.errors.description" class="mt-2" />
                     </div>
                 </form>
@@ -99,6 +95,7 @@
 
 <script>
 import { ref } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ChevronRightIcon, PencilAltIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -145,7 +142,7 @@ export default {
         }
 
         const archive = () => {
-            //
+            Inertia.delete(route('test-suites.destroy', props.suite.id))
         }
 
         const formatDate = dateStr => {

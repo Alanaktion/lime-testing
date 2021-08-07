@@ -39,7 +39,7 @@
 
                     <div class="col-span-6 sm:col-span-4">
                         <jet-label for="description" value="Description" />
-                        <textarea id="description" class="border-gray-300 focus:border-lime-500 focus:ring focus:ring-lime-300 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" v-model="form.description"></textarea>
+                        <textarea id="description" class="input" v-model="form.description"></textarea>
                         <jet-input-error :message="form.errors.description" class="mt-2" />
                     </div>
                 </template>

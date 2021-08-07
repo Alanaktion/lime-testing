@@ -70,6 +70,12 @@
                     </jet-button>
                 </form>
             </div>
+
+            <div class="mt-4 lg:mt-6 text-center" v-if="archivedCount">
+                <Link :href="route('test-suites.archived')" class="btn btn--secondary">
+                    Archived test suites
+                </Link>
+            </div>
         </div>
     </app-layout>
 </template>
@@ -85,7 +91,7 @@ import JetInput from '@/Jetstream/Input.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 
 export default {
-    props: ['testSuites'],
+    props: ['testSuites', 'archivedCount'],
     components: {
         Link,
         PencilAltIcon,

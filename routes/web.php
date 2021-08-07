@@ -21,6 +21,12 @@ Route::redirect('/', '/dashboard');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+Route::get('test-suites/archived', [TestSuiteController::class, 'archived'])
+    ->name('test-suites.archived');
+
+Route::post('test-suites/{trashedTestSuite}/restore', [TestSuiteController::class, 'restore'])
+    ->name('test-suites.restore');
+
 Route::resource('test-suites', TestSuiteController::class)
     ->except(['create', 'edit']);
 Route::resource('test-suites.tests', TestController::class)
