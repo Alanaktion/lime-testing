@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TestSuite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TestSuiteController extends Controller
@@ -15,10 +16,15 @@ class TestSuiteController extends Controller
 
     public function index()
     {
-        $testSuites = TestSuite::withCount('tests')
+        /** @var \App\Models\Team */
+        $team = Auth::user()->currentTeam;
+        $testSuites = $team->testSuites()
+            ->withCount('tests')
             ->orderBy('name')
             ->get();
-        $archivedCount = TestSuite::onlyTrashed()->count();
+        $archivedCount = $team->testSuites()
+            ->onlyTrashed()
+            ->count();
         return Inertia::render('TestSuites/Index', [
             'testSuites' => $testSuites,
             'archivedCount' => $archivedCount,
@@ -43,6 +49,7 @@ class TestSuiteController extends Controller
             'description' => 'nullable|max:4096',
         ]);
 
+        /** @var \App\Models\Team */
         $team = $request->user()->currentTeam;
         $suite = $team->testSuites()->create([
             'name' => $request->name,

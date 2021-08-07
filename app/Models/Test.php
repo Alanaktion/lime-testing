@@ -12,10 +12,6 @@ class Test extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $casts = [
-        'steps' => 'array',
-    ];
-
     protected $fillable = [
         'name',
         'description',

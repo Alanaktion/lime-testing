@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RunController;
+use App\Http\Controllers\RunTestController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestSuiteController;
 use Illuminate\Foundation\Application;
@@ -32,3 +34,7 @@ Route::resource('test-suites', TestSuiteController::class)
 Route::resource('test-suites.tests', TestController::class)
     ->shallow()
     ->except(['index', 'edit']);
+
+Route::resource('runs', RunController::class);
+Route::resource('runs.run-tests', RunTestController::class)
+    ->shallow();

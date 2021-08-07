@@ -22,8 +22,11 @@
                                 <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('test-suites.index')" :active="route().current('test-suites.*')">
+                                <jet-nav-link :href="route('test-suites.index')" :active="route().current('test-suites.*') || route().current('tests.*')">
                                     Test Suites
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('runs.index')" :active="route().current('runs.*')">
+                                    Run History
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -148,8 +151,11 @@
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('test-suites.index')" :active="route().current('test-suites.*')">
+                        <jet-responsive-nav-link :href="route('test-suites.index')" :active="route().current('test-suites.*') || route().current('tests.*')">
                             Test Suites
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('runs.index')" :active="route().current('runs.*')">
+                            Run History
                         </jet-responsive-nav-link>
                     </div>
 

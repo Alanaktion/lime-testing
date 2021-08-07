@@ -30,20 +30,16 @@ module.exports = {
             lg: '1024px',
             xl: '1280px',
         },
-        container: {
-            padding: {
-                DEFAULT: '1rem',
-                sm: '1.5rem',
-                lg: '2rem',
-            },
-            center: true,
-        },
     },
 
     variants: {
         extend: {
             opacity: ['disabled'],
         },
+    },
+
+    corePlugins: {
+        container: false,
     },
 
     plugins: [

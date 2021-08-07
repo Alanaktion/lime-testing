@@ -22,4 +22,9 @@ class TestSuite extends Model
     {
         return $this->hasMany(Test::class);
     }
+
+    public function runs()
+    {
+        return $this->hasMany(Run::class);
+    }
 }

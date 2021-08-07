@@ -12,7 +12,7 @@
                 v-if="testSuites.length"
             >
                 <div
-                    class="flex items-center px-6 py-4 border-b last:border-b-0"
+                    class="flex items-center px-6 py-4 border-b"
                     v-for="suite in testSuites"
                     :key="suite.id"
                 >
@@ -35,7 +35,7 @@
                     </button>
                 </div>
 
-                <div class="border-t bg-gray-50">
+                <div class="bg-gray-50">
                     <form @submit.prevent="submit" class="sm:flex max-w-md px-6 py-4">
                         <jet-label for="name" value="Suite name" class="sr-only" />
                         <jet-input
@@ -113,13 +113,15 @@ export default {
         }
 
         const run = suite => {
-            //
+            Inertia.post(route('runs.store'), {
+                test_suite_id: suite.id,
+            })
         }
 
         const formatDate = dateStr => {
-            const date = new Date(dateStr);
+            const date = new Date(dateStr)
             return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date);
+                .format(date)
         }
 
         return {

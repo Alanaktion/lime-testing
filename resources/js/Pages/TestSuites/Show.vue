@@ -40,7 +40,7 @@
                             <Link :href="route('tests.show', test.id)" class="font-semibold">
                                 {{ test.name }}
                             </Link>
-                            <div class="text-gray-600">{{ test.steps.length }} steps</div>
+                            <div class="text-gray-600">{{ test.steps.trim().split(/\r\n|\r|\n/).length }} steps</div>
                         </div>
                         <div class="mr-4">
                             Added {{ formatDate(test.created_at) }}
@@ -75,7 +75,7 @@
 
                     <div class="mt-4">
                         <jet-label for="description" value="Description" />
-                        <textarea id="description" class="input" v-model="form.description"></textarea>
+                        <textarea id="description" class="input block mt-1 w-full" v-model="form.description"></textarea>
                         <jet-input-error :message="form.errors.description" class="mt-2" />
                     </div>
                 </form>
@@ -146,9 +146,9 @@ export default {
         }
 
         const formatDate = dateStr => {
-            const date = new Date(dateStr);
+            const date = new Date(dateStr)
             return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date);
+                .format(date)
         }
 
         return {

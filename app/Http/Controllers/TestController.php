@@ -16,7 +16,7 @@ class TestController extends Controller
 
     public function create(TestSuite $testSuite)
     {
-        return Inertia::render('TestSuites/Tests/Create', [
+        return Inertia::render('TestSuites/Tests/Show', [
             'suite' => $testSuite,
         ]);
     }
@@ -26,8 +26,7 @@ class TestController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:4096',
-            'steps' => 'nullable|array',
-            'steps.*' => 'sometimes|string|max:255',
+            'steps' => 'nullable|string|max:4096',
         ]);
         $test = $testSuite->tests()->create($request->only([
             'name',
@@ -52,10 +51,12 @@ class TestController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:4096',
+            'steps' => 'nullable|string|max:4096',
         ]);
         $test->fill($request->only([
             'name',
             'description',
+            'steps',
         ]));
         $test->save();
         return redirect()->route('tests.show', $test)

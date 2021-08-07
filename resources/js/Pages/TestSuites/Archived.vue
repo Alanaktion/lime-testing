@@ -69,9 +69,9 @@ export default {
         }
 
         const formatDate = dateStr => {
-            const date = new Date(dateStr);
+            const date = new Date(dateStr)
             return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date);
+                .format(date)
         }
 
         return {
