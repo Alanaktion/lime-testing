@@ -35,4 +35,9 @@ class Test extends Model
     {
         return $this->belongsTo(TestSuite::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

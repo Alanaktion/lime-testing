@@ -12,7 +12,7 @@
                 v-if="testSuites.length"
             >
                 <div
-                    class="flex items-center px-6 py-4"
+                    class="flex items-center px-6 py-4 border-b last:border-b-0"
                     v-for="suite in testSuites"
                     :key="suite.id"
                 >
@@ -21,6 +21,9 @@
                             {{ suite.name }}
                         </Link>
                         <div class="text-gray-600">{{ suite.tests_count }} tests</div>
+                    </div>
+                    <div class="mr-4">
+                        Added {{ formatDate(suite.created_at) }}
                     </div>
                     <Link :href="route('test-suites.show', suite.id)" class="text-lime-600" title="Edit">
                         <span class="sr-only">Edit test suite</span>
@@ -107,11 +110,18 @@ export default {
             //
         }
 
+        const formatDate = dateStr => {
+            const date = new Date(dateStr);
+            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
+                .format(date);
+        }
+
         return {
             showCreateModal,
             form,
             submit,
             run,
+            formatDate,
         }
     },
 }

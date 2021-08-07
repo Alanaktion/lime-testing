@@ -12,13 +12,13 @@
                     </h2>
                 </div>
                 <div class="flex mt-3 sm:ml-auto sm:-my-1">
-                    <jet-secondary-button @click="editing = true" class="mr-2">
+                    <jet-secondary-button @click="editing = true">
                         Rename <span class="sr-only">test suite</span>
                     </jet-secondary-button>
                     <button
                         @click="archive"
                         type="button"
-                        class="inline-flex items-center px-3 py-2 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition"
+                        class="inline-flex items-center px-3 py-2 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition ml-2"
                     >
                         Archive <span class="sr-only">test suite</span>
                     </button>
@@ -36,7 +36,7 @@
             <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
                 <div v-if="tests.length">
                     <div
-                        class="flex items-center px-6 py-4"
+                        class="flex items-center px-6 py-4 border-b last:border-b-0"
                         v-for="test in tests"
                         :key="test.id"
                     >
@@ -46,6 +46,16 @@
                             </Link>
                             <div class="text-gray-600">{{ test.steps.length }} steps</div>
                         </div>
+                        <div class="mr-4">
+                            Added {{ formatDate(test.created_at) }}
+                            <span v-if="test.user">
+                                by {{ test.user.name }}
+                            </span>
+                        </div>
+                        <Link :href="route('tests.show', test.id)" class="text-lime-600" title="Edit">
+                            <span class="sr-only">Edit test</span>
+                            <PencilAltIcon class="w-6 h-6" />
+                        </Link>
                     </div>
                 </div>
                 <div class="text-center py-6 lg:py-12" v-else>
@@ -90,7 +100,7 @@
 <script>
 import { ref } from 'vue'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
-import { ChevronRightIcon } from '@heroicons/vue/outline'
+import { ChevronRightIcon, PencilAltIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import JetDialogModal from '@/Jetstream/DialogModal.vue'
 import JetButton from '@/Jetstream/Button.vue'
@@ -105,6 +115,7 @@ export default {
         Link,
         AppLayout,
         ChevronRightIcon,
+        PencilAltIcon,
         JetDialogModal,
         JetButton,
         JetSecondaryButton,
@@ -137,12 +148,19 @@ export default {
             //
         }
 
+        const formatDate = dateStr => {
+            const date = new Date(dateStr);
+            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
+                .format(date);
+        }
+
         return {
             editing,
             form,
             cancel,
             save,
             archive,
+            formatDate,
         }
     },
 }

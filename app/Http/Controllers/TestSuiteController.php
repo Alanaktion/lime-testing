@@ -59,6 +59,7 @@ class TestSuiteController extends Controller
     public function show(TestSuite $testSuite)
     {
         $tests = $testSuite->tests()
+            ->with(['user:id,name'])
             ->orderBy('sort_order')
             ->get();
         return Inertia::render('TestSuites/Show', [
