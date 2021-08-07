@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Test extends Model
 {
@@ -20,6 +21,15 @@ class Test extends Model
         'description',
         'steps',
     ];
+
+    public static function booted()
+    {
+        self::creating(function (Test $test) {
+            if ($test->user_id === null && Auth::check()) {
+                $test->user_id = Auth::user()->id;
+            }
+        });
+    }
 
     public function testSuite()
     {

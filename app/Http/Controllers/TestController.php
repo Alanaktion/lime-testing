@@ -34,7 +34,8 @@ class TestController extends Controller
             'description',
             'steps',
         ]));
-        return redirect()->route('tests.show', $test);
+        return redirect()->route('tests.show', $test)
+            ->with('flash.banner', 'Test created successfully.');
     }
 
     public function show(Test $test)
@@ -57,7 +58,8 @@ class TestController extends Controller
             'description',
         ]));
         $test->save();
-        return redirect()->route('tests.show', $test);
+        return redirect()->route('tests.show', $test)
+            ->with('flash.banner', 'Test updated successfully.');
     }
 
     public function destroy(Test $test)
