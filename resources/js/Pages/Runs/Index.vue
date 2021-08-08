@@ -16,10 +16,14 @@
                     v-for="run in runs"
                     :key="run.id"
                 >
-                    <div class="mr-auto">
+                    <div class="relative flex-1 mr-4">
                         <Link :href="route('runs.show', run.id)" class="font-semibold">
                             {{ run.test_suite.name }}
+                            <div class="absolute inset-0"></div>
                         </Link>
+                        <span class="text-gray-700 bg-gray-100 px-2 py-px text-sm font-semibold rounded-full ml-3" v-if="run.completed_at === null">
+                            Incomplete
+                        </span>
                     </div>
                     <div class="mr-4" v-if="run.result">
                         <ResultBadge :result="run.result" />
@@ -55,17 +59,6 @@ export default {
         Link,
         AppLayout,
         ResultBadge,
-    },
-    setup() {
-        const formatDate = dateStr => {
-            const date = new Date(dateStr)
-            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date)
-        }
-
-        return {
-            formatDate,
-        }
     },
 }
 </script>

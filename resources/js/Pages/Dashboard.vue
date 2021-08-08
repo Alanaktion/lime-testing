@@ -6,10 +6,33 @@
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="container">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <welcome />
+        <div class="container py-4 lg:py-6">
+            <div class="flex items-center self-center mb-8">
+                <img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" class="rounded-full h-16 w-16 object-cover shadow-md">
+                <div class="text-xl font-semibold ml-4">
+                    {{ $page.props.user.name }}
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-8">
+                <div class="bg-gray-50 px-6 py-4 font-semibold">
+                    Start a new test run
+                </div>
+                <div
+                    class="relative flex px-6 py-4 border-t"
+                    v-for="suite in suites"
+                    :key="suite.id"
+                >
+                    <div class="flex-1">{{ suite.name }}</div>
+                    <div class="mx-4" v-if="suite.latest_run">
+                        Last run {{ formatDate(suite.latest_run.created_at) }}
+                        <result-badge :result="suite.latest_run.result" class="ml-1" />
+                    </div>
+                    <button type="button" @click="run(suite)" class="appearance-none border-0 bg-transparent cursor-pointer text-lime-600" title="Run tests">
+                        <span class="sr-only">Start a new test run</span>
+                        <PlayIcon class="w-6 h-6" />
+                        <div class="absolute inset-0"></div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -17,13 +40,28 @@
 </template>
 
 <script>
-    import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Welcome.vue'
+import { Inertia } from '@inertiajs/inertia'
+import { PlayIcon } from '@heroicons/vue/outline'
+import AppLayout from '@/Layouts/AppLayout.vue'
+import ResultBadge from '@/Pages/Runs/Partials/ResultBadge.vue'
 
-    export default {
-        components: {
-            AppLayout,
-            Welcome,
-        },
-    }
+export default {
+    props: ['suites'],
+    components: {
+        PlayIcon,
+        AppLayout,
+        ResultBadge,
+    },
+    setup() {
+        const run = suite => {
+            Inertia.post(route('runs.store'), {
+                test_suite_id: suite.id,
+            })
+        }
+
+        return {
+            run,
+        }
+    },
+}
 </script>

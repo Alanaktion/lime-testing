@@ -19,11 +19,7 @@ class TestSuiteController extends Controller
         /** @var \App\Models\Team */
         $team = Auth::user()->currentTeam;
         $testSuites = $team->testSuites()
-            ->with([
-                'latestRun' => function ($query) {
-                    $query->whereNotNull('completed_at');
-                },
-            ])
+            ->with('latestRun')
             ->withCount('tests')
             ->orderBy('name')
             ->get();

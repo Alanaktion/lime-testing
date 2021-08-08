@@ -36,13 +36,14 @@
                         v-for="test in tests"
                         :key="test.id"
                     >
-                        <div class="mr-auto">
+                        <div class="relative flex-1">
                             <Link :href="route('tests.show', test.id)" class="font-semibold">
                                 {{ test.name }}
+                                <div class="absolute inset-0"></div>
                             </Link>
                             <div class="text-gray-600">{{ test.steps.trim().split(/\r\n|\r|\n/).length }} steps</div>
                         </div>
-                        <div class="mr-4">
+                        <div class="mx-4">
                             Added {{ formatDate(test.created_at) }}
                             <span v-if="test.user">
                                 by {{ test.user.name }}
@@ -145,19 +146,12 @@ export default {
             Inertia.delete(route('test-suites.destroy', props.suite.id))
         }
 
-        const formatDate = dateStr => {
-            const date = new Date(dateStr)
-            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date)
-        }
-
         return {
             editing,
             form,
             cancel,
             save,
             archive,
-            formatDate,
         }
     },
 }

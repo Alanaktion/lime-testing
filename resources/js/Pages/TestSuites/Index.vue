@@ -16,13 +16,14 @@
                     v-for="suite in testSuites"
                     :key="suite.id"
                 >
-                    <div class="mr-auto">
+                    <div class="relative flex-1">
                         <Link :href="route('test-suites.show', suite.id)" class="font-semibold">
                             {{ suite.name }}
+                            <div class="absolute inset-0"></div>
                         </Link>
                         <div class="text-gray-600">{{ suite.tests_count }} tests</div>
                     </div>
-                    <div class="mr-4" v-if="suite.latest_run">
+                    <div class="mx-4" v-if="suite.latest_run">
                         Last run {{ formatDate(suite.latest_run.created_at) }}
                         <result-badge :result="suite.latest_run.result" class="ml-1" />
                     </div>
@@ -33,7 +34,7 @@
                         <span class="sr-only">Edit test suite</span>
                         <PencilAltIcon class="w-6 h-6" />
                     </Link>
-                    <button type="button" @click="run(suite)" class="appearance-none border-0 bg-transparent cursor-pointer text-lime-600 ml-2 md:ml-4" title="Run">
+                    <button type="button" @click="run(suite)" class="appearance-none border-0 bg-transparent cursor-pointer text-lime-600 ml-2 md:ml-4" title="Run tests">
                         <span class="sr-only">Start a new test run</span>
                         <PlayIcon class="w-6 h-6" />
                     </button>
@@ -124,18 +125,11 @@ export default {
             })
         }
 
-        const formatDate = dateStr => {
-            const date = new Date(dateStr)
-            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date)
-        }
-
         return {
             showCreateModal,
             form,
             submit,
             run,
-            formatDate,
         }
     },
 }

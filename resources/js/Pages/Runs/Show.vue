@@ -68,16 +68,9 @@ export default {
             Inertia.patch(route('runs.update', props.run.id))
         }
 
-        const formatDate = dateStr => {
-            const date = new Date(dateStr)
-            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date)
-        }
-
         return {
             findRunTest,
             endTest,
-            formatDate,
         }
     },
 }

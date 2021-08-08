@@ -30,6 +30,10 @@ class TestSuite extends Model
 
     public function latestRun()
     {
-        return $this->hasOne(Run::class)->latestOfMany();
+        return $this->hasOne(Run::class)->ofMany([
+            'completed_at' => 'max',
+        ], function ($query) {
+            $query->whereNotNull('completed_at');
+        });
     }
 }

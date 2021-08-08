@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -14,6 +15,14 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return Inertia::render('Dashboard');
+        /** @var \App\Models\Team */
+        $team = Auth::user()->currentTeam;
+        $testSuites = $team->testSuites()
+            ->with('latestRun')
+            ->orderBy('name')
+            ->get();
+        return Inertia::render('Dashboard', [
+            'suites' => $testSuites,
+        ]);
     }
 }

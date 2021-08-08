@@ -68,15 +68,8 @@ export default {
             Inertia.post(route('test-suites.restore', suite.id))
         }
 
-        const formatDate = dateStr => {
-            const date = new Date(dateStr)
-            return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date)
-        }
-
         return {
             restore,
-            formatDate,
         }
     },
 }
