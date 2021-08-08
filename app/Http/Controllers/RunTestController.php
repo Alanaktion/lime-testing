@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Run;
 use App\Models\RunTest;
+use App\Models\Test;
 use Illuminate\Http\Request;
 
 class RunTestController extends Controller
@@ -13,78 +15,31 @@ class RunTestController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Update a run test by run and test.
      */
-    public function index()
+    public function update(Run $run, Test $test, Request $request)
     {
-        //
-    }
+        if ($run->user_id != $request->user()->id) {
+            abort(403);
+        }
+        if ($test->test_suite_id != $run->test_suite_id) {
+            abort(404);
+        }
+        $request->validate([
+            'result' => 'sometimes|in:pass,fail,skip',
+            'comment' => 'sometimes|nullable|string',
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        RunTest::unguard();
+        try {
+            $runTest = RunTest::updateOrCreate([
+                'run_id' => $run->id,
+                'test_id' => $test->id,
+            ], $request->only(['result', 'comment']));
+        } finally {
+            RunTest::reguard();
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RunTest  $runTest
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RunTest $runTest)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RunTest  $runTest
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RunTest $runTest)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RunTest  $runTest
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, RunTest $runTest)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RunTest  $runTest
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RunTest $runTest)
-    {
-        //
+        return $runTest;
     }
 }

@@ -22,6 +22,10 @@
                         </Link>
                         <div class="text-gray-600">{{ suite.tests_count }} tests</div>
                     </div>
+                    <div class="mr-4" v-if="suite.latest_run">
+                        Last run {{ formatDate(suite.latest_run.created_at) }}
+                        <result-badge :result="suite.latest_run.result" class="ml-1" />
+                    </div>
                     <div class="mr-4">
                         Added {{ formatDate(suite.created_at) }}
                     </div>
@@ -89,6 +93,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import JetButton from '@/Jetstream/Button.vue'
 import JetInput from '@/Jetstream/Input.vue'
 import JetLabel from '@/Jetstream/Label.vue'
+import ResultBadge from '../Runs/Partials/ResultBadge.vue'
 
 export default {
     props: ['testSuites', 'archivedCount'],
@@ -100,6 +105,7 @@ export default {
         JetButton,
         JetInput,
         JetLabel,
+        ResultBadge,
     },
     setup() {
         const showCreateModal = ref(false)

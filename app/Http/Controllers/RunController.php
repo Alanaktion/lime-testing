@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Run;
+use App\Models\RunTest;
 use App\Models\TestSuite;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,23 +25,15 @@ class RunController extends Controller
         // TODO: implement pagination
         $runs = Run::with([
                 'user:id,name',
-                'testSuite:id,name',
+                'testSuite' => function ($query) {
+                    $query->withTrashed()->select('id', 'name');
+                },
             ])
             ->latest()
             ->get();
         return Inertia::render('Runs/Index', [
             'runs' => $runs,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -74,10 +67,14 @@ class RunController extends Controller
     public function show(Run $run)
     {
         $run->load([
-            'testSuite',
+            'user:id,name',
+            'testSuite' => function ($query) {
+                $query->withTrashed();
+            },
             'testSuite.tests' => function ($query) {
                 $query->orderBy('sort_order');
             },
+            'runTests',
         ]);
         return Inertia::render('Runs/Show', [
             'run' => $run,
@@ -85,18 +82,9 @@ class RunController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Run  $run
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Run $run)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
+     *
+     * Currently always closes the run, but could do more in the future.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Run  $run
@@ -104,17 +92,21 @@ class RunController extends Controller
      */
     public function update(Request $request, Run $run)
     {
-        //
-    }
+        // Set the result based on the test data
+        $run->load('runTests:id,run_id,result');
+        $run->result = RunTest::RESULT_PASS;
+        foreach ($run->runTests as $runTest) {
+            if ($runTest->result == RunTest::RESULT_FAIL) {
+                $run->result = RunTest::RESULT_FAIL;
+                break;
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Run  $run
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Run $run)
-    {
-        //
+        // Close the run
+        $run->completed_at = now();
+        $run->save();
+
+        return redirect()->route('runs.index')
+            ->with('flash.banner', 'Test run completed.');
     }
 }

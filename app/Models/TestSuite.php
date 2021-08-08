@@ -27,4 +27,9 @@ class TestSuite extends Model
     {
         return $this->hasMany(Run::class);
     }
+
+    public function latestRun()
+    {
+        return $this->hasOne(Run::class)->latestOfMany();
+    }
 }

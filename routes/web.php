@@ -35,6 +35,7 @@ Route::resource('test-suites.tests', TestController::class)
     ->shallow()
     ->except(['index', 'edit']);
 
-Route::resource('runs', RunController::class);
-Route::resource('runs.run-tests', RunTestController::class)
-    ->shallow();
+Route::patch('runs/{run}/tests/{test}', [RunTestController::class, 'update'])
+    ->name('runs.run-test.update');
+Route::resource('runs', RunController::class)
+    ->except(['create', 'edit', 'destroy']);

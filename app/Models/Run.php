@@ -9,6 +9,8 @@ class Run extends Model
 {
     use HasFactory;
 
+    protected $dates = ['completed_at'];
+
     public function testSuite()
     {
         return $this->belongsTo(TestSuite::class);

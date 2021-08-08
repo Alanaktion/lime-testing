@@ -24,7 +24,10 @@
                     <div class="mr-4" v-if="run.result">
                         <ResultBadge :result="run.result" />
                     </div>
-                    <div>
+                    <div v-if="run.completed_at">
+                        Completed {{ formatDate(run.completed_at) }} by {{ run.user.name }}
+                    </div>
+                    <div v-else>
                         Started {{ formatDate(run.created_at) }} by {{ run.user.name }}
                     </div>
                 </div>
@@ -55,9 +58,9 @@ export default {
     },
     setup() {
         const formatDate = dateStr => {
-            const date = new Date(dateStr);
+            const date = new Date(dateStr)
             return new Intl.DateTimeFormat('default', {dateStyle: 'short'})
-                .format(date);
+                .format(date)
         }
 
         return {
