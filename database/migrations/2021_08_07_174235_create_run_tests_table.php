@@ -15,7 +15,8 @@ class CreateRunTestsTable extends Migration
     {
         Schema::create('run_tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('run_id')->constrained();
+            $table->foreignId('run_id')->constrained()
+                ->onDelete('cascade');
             $table->foreignId('test_id')->constrained();
             $table->enum('result', ['pass', 'fail', 'skip'])->nullable();
             $table->text('comment')->nullable();

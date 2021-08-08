@@ -42,7 +42,7 @@
                                     {{ test.name }}
                                     <div class="absolute inset-0"></div>
                                 </Link>
-                                <div class="text-gray-600">{{ test.steps.trim().split(/\r\n|\r|\n/).length }} steps</div>
+                                <div class="text-gray-600">{{ getStepCount(test) }} steps</div>
                             </div>
                             <div>
                                 Added {{ formatDate(test.created_at) }}
@@ -148,12 +148,20 @@ export default {
             Inertia.delete(route('test-suites.destroy', props.suite.id))
         }
 
+        const getStepCount = test => {
+            if (!test.steps) {
+                return 0
+            }
+            return test.steps.trim().split(/\r\n|\r|\n/).length
+        }
+
         return {
             editing,
             form,
             cancel,
             save,
             archive,
+            getStepCount,
         }
     },
 }

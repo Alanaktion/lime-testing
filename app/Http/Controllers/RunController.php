@@ -109,4 +109,11 @@ class RunController extends Controller
         return redirect()->route('runs.index')
             ->with('flash.banner', 'Test run completed.');
     }
+
+    public function destroy(Run $run)
+    {
+        $run->delete();
+        return redirect()->route('dashboard')
+            ->with('flash.banner', 'Test run canceled.');
+    }
 }

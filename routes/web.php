@@ -38,4 +38,4 @@ Route::resource('test-suites.tests', TestController::class)
 Route::patch('runs/{run}/tests/{test}', [RunTestController::class, 'update'])
     ->name('runs.run-test.update');
 Route::resource('runs', RunController::class)
-    ->except(['create', 'edit', 'destroy']);
+    ->except(['create', 'edit']);

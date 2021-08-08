@@ -16,6 +16,7 @@ class Test extends Model
         'name',
         'description',
         'steps',
+        'sort_order',
     ];
 
     public static function booted()

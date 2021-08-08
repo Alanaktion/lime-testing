@@ -28,11 +28,14 @@ class TestController extends Controller
             'description' => 'nullable|string|max:4096',
             'steps' => 'nullable|string|max:4096',
         ]);
+        $maxSortOrder = $testSuite->tests()->max('sort_order');
         $test = $testSuite->tests()->create($request->only([
             'name',
             'description',
             'steps',
-        ]));
+        ]) + [
+            'sort_order' => $maxSortOrder + 1,
+        ]);
         return redirect()->route('tests.show', $test)
             ->with('flash.banner', 'Test created successfully.');
     }

@@ -14,6 +14,25 @@
                 </div>
             </div>
 
+            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-6 sm:my-8" v-if="activeRuns.length">
+                <div class="bg-gray-50 px-4 sm:px-6 py-4 font-semibold">
+                    Active test runs
+                </div>
+                <div
+                    class="relative sm:flex items-center px-4 sm:px-6 py-4 border-t"
+                    v-for="run in activeRuns"
+                    :key="run.id"
+                >
+                    <Link :href="route('runs.show', run.id)" class="font-semibold mr-4">
+                        {{ run.test_suite.name }}
+                        <div class="absolute inset-0"></div>
+                    </Link>
+                    <div class="ml-auto">
+                        {{ run.run_tests_count }} of {{ run.test_suite.tests_count }} tests completed
+                    </div>
+                </div>
+            </div>
+
             <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-6 sm:my-8">
                 <div class="bg-gray-50 px-4 sm:px-6 py-4 font-semibold">
                     Start a new test run
@@ -42,14 +61,16 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
 import { PlayIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ResultBadge from '@/Pages/Runs/Partials/ResultBadge.vue'
 
 export default {
-    props: ['suites'],
+    props: ['activeRuns', 'suites'],
     components: {
+        Link,
         PlayIcon,
         AppLayout,
         ResultBadge,

@@ -15,8 +15,13 @@
                     Completed {{ formatDate(run.completed_at) }} by {{ run.user.name }}
                     <result-badge class="ml-3" :result="run.result" />
                 </div>
-                <div v-else>
-                    Started {{ formatDate(run.created_at) }} by {{ run.user.name }}
+                <div class="flex items-center" v-else>
+                    <div class="mr-4">
+                        Started {{ formatDate(run.created_at) }} by {{ run.user.name }}
+                    </div>
+                    <jet-secondary-button @click="cancelTest" class="ml-auto">
+                        Cancel run
+                    </jet-secondary-button>
                 </div>
             </div>
         </template>
@@ -56,6 +61,7 @@ import { Inertia } from '@inertiajs/inertia'
 import { ChevronRightIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import JetButton from '@/Jetstream/Button.vue'
+import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
 import ResultBadge from './Partials/ResultBadge.vue'
 import RunTest from './Partials/RunTest.vue'
 
@@ -66,6 +72,7 @@ export default {
         ChevronRightIcon,
         AppLayout,
         JetButton,
+        JetSecondaryButton,
         ResultBadge,
         RunTest,
     },
@@ -78,9 +85,14 @@ export default {
             Inertia.patch(route('runs.update', props.run.id))
         }
 
+        const cancelTest = () => {
+            Inertia.delete(route('runs.destroy', props.run.id))
+        }
+
         return {
             findRunTest,
             endTest,
+            cancelTest,
         }
     },
 }
