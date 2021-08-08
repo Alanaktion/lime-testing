@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-6 py-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6 py-4">
             <div>
                 <div class="font-semibold mb-1">{{ test.name }}</div>
                 <div class="whitespace-pre-wrap">{{ test.description }}</div>
@@ -8,7 +8,7 @@
             <div class="whitespace-pre-wrap">{{ test.steps }}</div>
         </div>
         <div class="bg-gray-50 border-t">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-6 py-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6 py-4">
                 <RadioGroup class="flex gap-2" v-model="result" v-if="!closed">
                     <RadioGroupLabel class="sr-only">Result</RadioGroupLabel>
                     <RadioGroupOption class="focus:outline-none" v-slot="{ checked }" value="pass">

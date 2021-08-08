@@ -7,26 +7,28 @@
         </template>
 
         <div class="container py-4 lg:py-6">
-            <div class="flex items-center self-center mb-8">
+            <div class="flex items-center self-center px-4 sm:px-0">
                 <img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" class="rounded-full h-16 w-16 object-cover shadow-md">
                 <div class="text-xl font-semibold ml-4">
                     {{ $page.props.user.name }}
                 </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-8">
-                <div class="bg-gray-50 px-6 py-4 font-semibold">
+            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-6 sm:my-8">
+                <div class="bg-gray-50 px-4 sm:px-6 py-4 font-semibold">
                     Start a new test run
                 </div>
                 <div
-                    class="relative flex px-6 py-4 border-t"
+                    class="relative flex items-center px-4 sm:px-6 py-4 border-t"
                     v-for="suite in suites"
                     :key="suite.id"
                 >
-                    <div class="flex-1">{{ suite.name }}</div>
-                    <div class="mx-4" v-if="suite.latest_run">
-                        Last run {{ formatDate(suite.latest_run.created_at) }}
-                        <result-badge :result="suite.latest_run.result" class="ml-1" />
+                    <div class="flex-1 sm:flex items-center justify-between">
+                        <div class="font-semibold">{{ suite.name }}</div>
+                        <div class="sm:mx-4" v-if="suite.latest_run">
+                            Last run {{ formatDate(suite.latest_run.created_at) }}
+                            <result-badge :result="suite.latest_run.result" class="ml-1" />
+                        </div>
                     </div>
                     <button type="button" @click="run(suite)" class="appearance-none border-0 bg-transparent cursor-pointer text-lime-600" title="Run tests">
                         <span class="sr-only">Start a new test run</span>

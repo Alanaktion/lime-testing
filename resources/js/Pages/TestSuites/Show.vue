@@ -23,7 +23,7 @@
         </template>
 
         <div class="container py-4 lg:py-6">
-            <div class="flex justify-end mb-3">
+            <div class="flex justify-end mb-3 px-4 sm:px-0">
                 <Link :href="route('test-suites.tests.create', suite.id)" class="btn btn--primary">
                     Add Test
                 </Link>
@@ -36,18 +36,20 @@
                         v-for="test in tests"
                         :key="test.id"
                     >
-                        <div class="relative flex-1">
-                            <Link :href="route('tests.show', test.id)" class="font-semibold">
-                                {{ test.name }}
-                                <div class="absolute inset-0"></div>
-                            </Link>
-                            <div class="text-gray-600">{{ test.steps.trim().split(/\r\n|\r|\n/).length }} steps</div>
-                        </div>
-                        <div class="mx-4">
-                            Added {{ formatDate(test.created_at) }}
-                            <span v-if="test.user">
-                                by {{ test.user.name }}
-                            </span>
+                        <div class="flex-1 sm:flex items-center mr-4">
+                            <div class="relative flex-1">
+                                <Link :href="route('tests.show', test.id)" class="font-semibold">
+                                    {{ test.name }}
+                                    <div class="absolute inset-0"></div>
+                                </Link>
+                                <div class="text-gray-600">{{ test.steps.trim().split(/\r\n|\r|\n/).length }} steps</div>
+                            </div>
+                            <div>
+                                Added {{ formatDate(test.created_at) }}
+                                <span v-if="test.user">
+                                    by {{ test.user.name }}
+                                </span>
+                            </div>
                         </div>
                         <Link :href="route('tests.show', test.id)" class="text-lime-600" title="Edit">
                             <span class="sr-only">Edit test</span>

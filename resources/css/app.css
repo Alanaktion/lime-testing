@@ -4,11 +4,11 @@
 
 @layer components {
     .container {
-        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+        @apply max-w-7xl mx-auto sm:px-6 lg:px-8;
     }
 
     .btn {
-        @apply inline-flex items-center text-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25 transition;
+        @apply inline-flex items-center justify-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25 transition;
     }
     .btn--primary {
         @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-300;

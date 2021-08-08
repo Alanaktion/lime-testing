@@ -1,9 +1,15 @@
 <template>
     <app-layout :title="`Test Run - ${run.test_suite.name}`">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Test Run - {{ run.test_suite.name }}
-            </h2>
+            <div class="flex flex-wrap items-center">
+                <Link :href="route('runs.index')" class="font-semibold text-xl text-gray-800 leading-tight">
+                    Test Runs
+                </Link>
+                <ChevronRightIcon class="h-4 w-4 mt-0.5 text-gray-500 mx-2" />
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ run.test_suite.name }}
+                </h2>
+            </div>
             <div class="mt-3">
                 <div class="flex items-center" v-if="run.completed_at">
                     Completed {{ formatDate(run.completed_at) }} by {{ run.user.name }}
@@ -45,7 +51,9 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue3'
 import { Inertia } from '@inertiajs/inertia'
+import { ChevronRightIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import JetButton from '@/Jetstream/Button.vue'
 import ResultBadge from './Partials/ResultBadge.vue'
@@ -54,6 +62,8 @@ import RunTest from './Partials/RunTest.vue'
 export default {
     props: ['run'],
     components: {
+        Link,
+        ChevronRightIcon,
         AppLayout,
         JetButton,
         ResultBadge,

@@ -18,18 +18,20 @@
                 v-if="testSuites.length"
             >
                 <div
-                    class="flex items-center px-6 py-4 border-b last:border-b-0"
+                    class="flex items-center px-4 sm:px-6 py-4 border-b last:border-b-0"
                     v-for="suite in testSuites"
                     :key="suite.id"
                 >
-                    <div class="mr-auto">
-                        <div class="font-semibold">
-                            {{ suite.name }}
+                    <div class="flex-1 sm:flex items-center mr-4">
+                        <div class="flex-1 mb-2 sm:mb-0">
+                            <div class="font-semibold">
+                                {{ suite.name }}
+                            </div>
+                            <div class="text-gray-600">{{ suite.tests_count }} tests</div>
                         </div>
-                        <div class="text-gray-600">{{ suite.tests_count }} tests</div>
-                    </div>
-                    <div class="mr-4">
-                        Archived {{ formatDate(suite.deleted_at) }}
+                        <div>
+                            Archived {{ formatDate(suite.deleted_at) }}
+                        </div>
                     </div>
                     <button type="button" @click="restore(suite)" class="appearance-none border-0 bg-transparent cursor-pointer text-lime-600 ml-2 md:ml-4" title="Restore">
                         <span class="sr-only">Restore test suite</span>

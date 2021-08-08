@@ -12,23 +12,25 @@
                 v-if="testSuites.length"
             >
                 <div
-                    class="flex items-center px-6 py-4 border-b"
+                    class="flex items-center px-4 sm:px-6 py-4 border-b"
                     v-for="suite in testSuites"
                     :key="suite.id"
                 >
-                    <div class="relative flex-1">
-                        <Link :href="route('test-suites.show', suite.id)" class="font-semibold">
-                            {{ suite.name }}
-                            <div class="absolute inset-0"></div>
-                        </Link>
-                        <div class="text-gray-600">{{ suite.tests_count }} tests</div>
-                    </div>
-                    <div class="mx-4" v-if="suite.latest_run">
-                        Last run {{ formatDate(suite.latest_run.created_at) }}
-                        <result-badge :result="suite.latest_run.result" class="ml-1" />
-                    </div>
-                    <div class="mr-4">
-                        Added {{ formatDate(suite.created_at) }}
+                    <div class="flex-1 sm:flex items-center mr-4">
+                        <div class="relative flex-1 mb-2 sm:mb-0">
+                            <Link :href="route('test-suites.show', suite.id)" class="font-semibold">
+                                {{ suite.name }}
+                                <div class="absolute inset-0"></div>
+                            </Link>
+                            <div class="text-gray-600">{{ suite.tests_count }} tests</div>
+                        </div>
+                        <div class="sm:mx-4" v-if="suite.latest_run">
+                            Last run {{ formatDate(suite.latest_run.created_at) }}
+                            <result-badge :result="suite.latest_run.result" class="ml-1" />
+                        </div>
+                        <div>
+                            Added {{ formatDate(suite.created_at) }}
+                        </div>
                     </div>
                     <Link :href="route('test-suites.show', suite.id)" class="text-lime-600" title="Edit">
                         <span class="sr-only">Edit test suite</span>
@@ -41,7 +43,7 @@
                 </div>
 
                 <div class="bg-gray-50">
-                    <form @submit.prevent="submit" class="sm:flex max-w-md px-6 py-4">
+                    <form @submit.prevent="submit" class="sm:flex max-w-md px-4 sm:px-6 py-4">
                         <jet-label for="name" value="Suite name" class="sr-only" />
                         <jet-input
                             id="name" type="text" class="w-full"
@@ -55,7 +57,7 @@
                     </form>
                 </div>
             </div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg py-6 lg:py-12 my-8" v-else>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 sm:px-6 py-6 lg:py-12 my-8" v-else>
                 <p class="text-center">
                     No test suites
                 </p>
