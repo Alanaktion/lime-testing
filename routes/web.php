@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunTestController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestSuiteController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/dashboard');
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
