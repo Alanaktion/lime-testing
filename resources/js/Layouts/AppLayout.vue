@@ -13,6 +13,7 @@
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
+                                    <span class="sr-only">{{ $page.props.appName }}</span>
                                     <jet-application-mark class="block h-9 w-auto" />
                                 </Link>
                             </div>

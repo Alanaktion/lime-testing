@@ -1,17 +1,18 @@
 <template>
     <Link :href="'/'">
-        <ClipboardListIcon class="text-lime-500 w-16 h-16" />
+        <span class="sr-only">{{ $page.props.appName }}</span>
+        <application-mark class="w-16 h-16" aria-hidden="true" />
     </Link>
 </template>
 
 <script>
     import { Link } from '@inertiajs/inertia-vue3';
-    import { ClipboardListIcon } from '@heroicons/vue/outline'
+    import ApplicationMark from './ApplicationMark.vue';
 
     export default {
         components: {
             Link,
-            ClipboardListIcon,
+            ApplicationMark,
         },
     }
 </script>
