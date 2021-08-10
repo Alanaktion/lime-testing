@@ -27,7 +27,12 @@ class TestSuiteFactory extends Factory
         ];
     }
 
-    public function archived(): static
+    /**
+     * Indicate that the test suite should be archived.
+     *
+     * @return $this
+     */
+    public function archived()
     {
         return $this->state(function (array $attributes) {
             return [
