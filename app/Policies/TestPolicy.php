@@ -41,7 +41,7 @@ class TestPolicy
      */
     public function create(User $user)
     {
-        return $user->hasTeamPermission($user->team, 'create');
+        return $user->hasTeamPermission($user->currentTeam, 'create');
     }
 
     /**
