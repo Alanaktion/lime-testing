@@ -12,6 +12,7 @@ class TestSuiteController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum', 'verified']);
+        $this->authorizeResource(TestSuite::class, 'test_suite');
     }
 
     public function index()
@@ -98,6 +99,7 @@ class TestSuiteController extends Controller
 
     public function restore(TestSuite $testSuite)
     {
+        $this->authorize('restore', $testSuite);
         $testSuite->restore();
         return redirect()->route('test-suites.index')
             ->with('flash.banner', 'Test suite restored.');

@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-6 sm:my-8">
+            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg my-6 sm:my-8" v-if="suites.length">
                 <div class="bg-gray-50 px-4 sm:px-6 py-4 font-semibold">
                     Start a new test run
                 </div>
@@ -55,6 +55,14 @@
                         <div class="absolute inset-0"></div>
                     </button>
                 </div>
+            </div>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 sm:px-6 py-6 lg:py-12 my-8" v-else>
+                <p class="text-center">
+                    No test suites
+                </p>
+                <p class="text-gray-600 text-center">
+                    Create your first test suite before starting testing.
+                </p>
             </div>
         </div>
     </app-layout>

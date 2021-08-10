@@ -6,6 +6,7 @@ use App\Models\Run;
 use App\Models\RunTest;
 use App\Models\TestSuite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class RunController extends Controller
@@ -13,6 +14,7 @@ class RunController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum', 'verified']);
+        $this->authorizeResource(Run::class, 'run');
     }
 
     /**
@@ -29,6 +31,9 @@ class RunController extends Controller
                     $query->withTrashed()->select('id', 'name');
                 },
             ])
+            ->whereHas('testSuite', function ($query) {
+                $query->where('team_id', Auth::user()->current_team_id);
+            })
             ->latest()
             ->get();
         return Inertia::render('Runs/Index', [
@@ -48,9 +53,7 @@ class RunController extends Controller
             'test_suite_id' => 'required|integer|exists:test_suites,id',
         ]);
         $testSuite = TestSuite::find($request->input('test_suite_id'));
-        if ($testSuite->team_id != $request->user()->current_team_id) {
-            abort(403);
-        }
+        $this->authorize('view', $testSuite);
         $run = Run::forceCreate([
             'test_suite_id' => $testSuite->id,
             'user_id' => $request->user()->id,

@@ -12,10 +12,12 @@ class TestController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum', 'verified']);
+        $this->authorizeResource(Test::class, 'test');
     }
 
     public function create(TestSuite $testSuite)
     {
+        $this->authorize('view', $testSuite);
         return Inertia::render('TestSuites/Tests/Show', [
             'suite' => $testSuite,
         ]);
@@ -23,6 +25,7 @@ class TestController extends Controller
 
     public function store(Request $request, TestSuite $testSuite)
     {
+        $this->authorize('view', $testSuite);
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:4096',

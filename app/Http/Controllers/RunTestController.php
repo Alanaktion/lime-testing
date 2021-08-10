@@ -12,6 +12,7 @@ class RunTestController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum', 'verified']);
+        $this->authorizeResource(RunTest::class, 'test');
     }
 
     /**
@@ -19,9 +20,6 @@ class RunTestController extends Controller
      */
     public function update(Run $run, Test $test, Request $request)
     {
-        if ($run->user_id != $request->user()->id) {
-            abort(403);
-        }
         if ($test->test_suite_id != $run->test_suite_id) {
             abort(404);
         }
