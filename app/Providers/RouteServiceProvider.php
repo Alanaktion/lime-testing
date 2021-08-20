@@ -48,10 +48,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
-
-        Route::bind('trashedTestSuite', function ($value) {
-            return TestSuite::withTrashed()->where('id', $value)->firstOrFail();
-        });
     }
 
     /**

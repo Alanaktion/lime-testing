@@ -26,8 +26,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('test-suites/archived', [TestSuiteController::class, 'archived'])
     ->name('test-suites.archived');
 
-Route::post('test-suites/{trashedTestSuite}/restore', [TestSuiteController::class, 'restore'])
-    ->name('test-suites.restore');
+Route::post('test-suites/{testSuite}/restore', [TestSuiteController::class, 'restore'])
+    ->name('test-suites.restore')
+    ->withTrashed();
 
 Route::resource('test-suites', TestSuiteController::class)
     ->except(['create', 'edit']);
