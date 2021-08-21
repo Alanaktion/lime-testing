@@ -95,6 +95,10 @@ class RunController extends Controller
      */
     public function update(Request $request, Run $run)
     {
+        if ($run->completed_at) {
+            return redirect()->route('runs.show', $run);
+        }
+
         // Set the result based on the test data
         $run->load('runTests:id,run_id,result');
         $run->result = RunTest::RESULT_PASS;
@@ -115,6 +119,10 @@ class RunController extends Controller
 
     public function destroy(Run $run)
     {
+        if ($run->completed_at) {
+            return redirect()->route('runs.show', $run);
+        }
+
         $run->delete();
         return redirect()->route('dashboard')
             ->with('flash.banner', 'Test run canceled.');

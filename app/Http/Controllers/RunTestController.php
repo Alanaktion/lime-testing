@@ -23,6 +23,9 @@ class RunTestController extends Controller
         if ($test->test_suite_id != $run->test_suite_id) {
             abort(404);
         }
+        if ($run->completed_at) {
+            abort(400, 'Cannot modify a completed test run');
+        }
         $request->validate([
             'result' => 'sometimes|in:pass,fail,skip',
             'comment' => 'sometimes|nullable|string',
