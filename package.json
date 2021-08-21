@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@headlessui/vue": "^1.4.0",
-        "@heroicons/vue": "^1.0.4"
+        "@heroicons/vue": "^1.0.4",
+        "vuedraggable": "^4.0.3"
     }
 }

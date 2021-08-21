@@ -57,18 +57,23 @@ class TestController extends Controller
     public function update(Request $request, Test $test)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'priority' => 'required|string|in:optional,normal,high',
-            'description' => 'nullable|string|max:4096',
-            'steps' => 'nullable|string|max:4096',
+            'name' => 'sometimes|string|max:255',
+            'priority' => 'sometimes|string|in:optional,normal,high',
+            'description' => 'sometimes|nullable|string|max:4096',
+            'steps' => 'sometimes|nullable|string|max:4096',
+            'sort_order' => 'sometimes|numeric',
         ]);
         $test->fill($request->only([
             'name',
             'priority',
             'description',
             'steps',
+            'sort_order',
         ]));
         $test->save();
+        if ($request->expectsJson()) {
+            return $test;
+        }
         return redirect()->route('tests.show', $test)
             ->with('flash.banner', 'Test updated successfully.');
     }
