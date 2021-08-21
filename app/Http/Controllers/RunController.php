@@ -24,7 +24,6 @@ class RunController extends Controller
      */
     public function index()
     {
-        // TODO: implement pagination
         $runs = Run::with([
                 'user:id,name',
                 'testSuite' => function ($query) {
@@ -35,7 +34,7 @@ class RunController extends Controller
                 $query->where('team_id', Auth::user()->current_team_id);
             })
             ->latest()
-            ->get();
+            ->paginate();
         return Inertia::render('Runs/Index', [
             'runs' => $runs,
         ]);

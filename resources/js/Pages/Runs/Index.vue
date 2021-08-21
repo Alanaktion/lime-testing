@@ -9,11 +9,11 @@
         <div class="container py-4 lg:py-6">
             <div
                 class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg"
-                v-if="runs.length"
+                v-if="runs.data.length"
             >
                 <div
                     class="flex items-center px-4 sm:px-6 py-4 border-b last:border-b-0"
-                    v-for="run in runs"
+                    v-for="run in runs.data"
                     :key="run.id"
                 >
                     <div class="flex-1 sm:flex items-center">
@@ -44,6 +44,8 @@
                     Start a test run from the Test Suites view, or from the dashboard.
                 </p>
             </div>
+
+            <JetPagination :paginator="runs" class="mt-4" />
         </div>
     </app-layout>
 </template>
@@ -52,6 +54,7 @@
 import { Link } from '@inertiajs/inertia-vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ResultBadge from './Partials/ResultBadge.vue'
+import JetPagination from '@/Jetstream/Pagination.vue'
 
 export default {
     props: ['runs'],
@@ -59,6 +62,7 @@ export default {
         Link,
         AppLayout,
         ResultBadge,
+        JetPagination,
     },
 }
 </script>
