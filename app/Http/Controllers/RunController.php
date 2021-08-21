@@ -103,7 +103,7 @@ class RunController extends Controller
         $run->load('runTests:id,run_id,result');
         $run->result = RunTest::RESULT_PASS;
         foreach ($run->runTests as $runTest) {
-            if ($runTest->result == RunTest::RESULT_FAIL) {
+            if ($runTest->result == RunTest::RESULT_FAIL && $runTest->required) {
                 $run->result = RunTest::RESULT_FAIL;
                 break;
             }

@@ -34,6 +34,10 @@
                     </div>
 
                     <div class="col-span-6 sm:col-span-4">
+                        <PrioritySelector v-model="form.priority" />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
                         <jet-label for="description" value="Description" />
                         <textarea id="description" class="input block mt-1 w-full" v-model="form.description"></textarea>
                         <jet-input-error :message="form.errors.description" class="mt-2" />
@@ -68,6 +72,7 @@ import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
 import JetInput from '@/Jetstream/Input.vue'
 import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
+import PrioritySelector from './Partials/PrioritySelector.vue'
 
 export default {
     props: ['suite', 'test'],
@@ -82,11 +87,13 @@ export default {
         JetInput,
         JetInputError,
         JetLabel,
+        PrioritySelector,
     },
     setup(props) {
         const newStep = ref(null)
         const form = useForm({
             name: props.test?.name,
+            priority: props.test?.priority || 'normal',
             description: props.test?.description,
             steps: props.test?.steps,
         })

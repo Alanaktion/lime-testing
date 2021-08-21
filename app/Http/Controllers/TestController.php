@@ -28,12 +28,14 @@ class TestController extends Controller
         $this->authorize('view', $testSuite);
         $request->validate([
             'name' => 'required|string|max:255',
+            'priority' => 'required|string|in:optional,normal,high',
             'description' => 'nullable|string|max:4096',
             'steps' => 'nullable|string|max:4096',
         ]);
         $maxSortOrder = $testSuite->tests()->max('sort_order');
         $test = $testSuite->tests()->create($request->only([
             'name',
+            'priority',
             'description',
             'steps',
         ]) + [
@@ -56,11 +58,13 @@ class TestController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'priority' => 'required|string|in:optional,normal,high',
             'description' => 'nullable|string|max:4096',
             'steps' => 'nullable|string|max:4096',
         ]);
         $test->fill($request->only([
             'name',
+            'priority',
             'description',
             'steps',
         ]));

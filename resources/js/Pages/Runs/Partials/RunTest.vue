@@ -2,7 +2,22 @@
     <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6 py-4">
             <div>
-                <div class="font-semibold mb-1">{{ test.name }}</div>
+                <div class="flex flex-wrap items-center gap-4 mb-1">
+                    <div class="font-semibold">{{ test.name }}</div>
+                    <div
+                        v-if="test.priority !== 'normal'"
+                        :class="{
+                            'uppercase rounded py-1 px-2 text-xs font-semibold': true,
+                            'bg-gray-100': test.priority === 'optional',
+                            'bg-red-100 text-red-800': test.priority === 'high',
+                        }"
+                        :title="test.priority === 'optional'
+                            ? 'This test is optional and will not affect the overall test run result.'
+                            : null"
+                    >
+                        {{ test.priority === 'high' ? 'High priority' : 'Optional' }}
+                    </div>
+                </div>
                 <div class="whitespace-pre-wrap">{{ test.description }}</div>
             </div>
             <div class="whitespace-pre-wrap">{{ test.steps }}</div>

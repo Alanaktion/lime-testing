@@ -12,11 +12,20 @@ class Test extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public const PRIORITY_OPTIONAL = 'optional';
+    public const PRIORITY_NORMAL = 'normal';
+    public const PRIORITY_HIGH = 'high';
+
     protected $fillable = [
         'name',
         'description',
         'steps',
         'sort_order',
+        'priority',
+    ];
+
+    protected $appends = [
+        'required',
     ];
 
     public static function booted()
@@ -26,6 +35,11 @@ class Test extends Model
                 $test->user_id = Auth::user()->id;
             }
         });
+    }
+
+    public function getRequiredAttribute(): bool
+    {
+        return $this->priority !== self::PRIORITY_OPTIONAL;
     }
 
     public function testSuite()
