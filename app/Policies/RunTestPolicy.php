@@ -31,7 +31,7 @@ class RunTestPolicy
     public function view(User $user, RunTest $runTest)
     {
         return $user->id == $runTest->user_id
-            || $user->current_team_id == $runTest->run->test_suite->team_id;
+            || $user->current_team_id == $runTest->run->testSuite->team_id;
     }
 
     /**
