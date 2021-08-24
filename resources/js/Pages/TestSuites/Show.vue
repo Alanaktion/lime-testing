@@ -71,6 +71,12 @@
                     No tests added yet.
                 </div>
             </div>
+
+            <div class="mt-4 lg:mt-6 text-center" v-if="archivedCount">
+                <Link :href="route('tests.archived', suite.id)" class="btn btn--secondary">
+                    Archived tests
+                </Link>
+            </div>
         </div>
 
         <jet-dialog-modal :show="editing" @close="cancel">
@@ -121,7 +127,7 @@ import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 
 export default {
-    props: ['suite', 'tests'],
+    props: ['suite', 'tests', 'archivedCount'],
     components: {
         Link,
         AppLayout,

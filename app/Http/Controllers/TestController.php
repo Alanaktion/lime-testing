@@ -23,6 +23,17 @@ class TestController extends Controller
         ]);
     }
 
+    public function archived(TestSuite $testSuite)
+    {
+        $tests = $testSuite->tests()
+            ->onlyTrashed()
+            ->get();
+        return Inertia::render('TestSuites/Tests/Archived', [
+            'suite' => $testSuite,
+            'tests' => $tests,
+        ]);
+    }
+
     public function store(Request $request, TestSuite $testSuite)
     {
         $this->authorize('view', $testSuite);
@@ -82,6 +93,15 @@ class TestController extends Controller
     {
         $testSuite = $test->testSuite;
         $test->delete();
-        return redirect()->route('test-suite.show', $testSuite);
+        return redirect()->route('test-suites.show', $testSuite)
+            ->with('flash.banner', 'Test archived.');
+    }
+
+    public function restore(Test $test)
+    {
+        $this->authorize('restore', $test);
+        $test->restore();
+        return redirect()->route('test-suites.show', $test->test_suite_id)
+            ->with('flash.banner', 'Test restored.');
     }
 }

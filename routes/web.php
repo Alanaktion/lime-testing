@@ -30,6 +30,13 @@ Route::post('test-suites/{testSuite}/restore', [TestSuiteController::class, 'res
     ->name('test-suites.restore')
     ->withTrashed();
 
+Route::get('test-suites/{testSuite}/archived', [TestController::class, 'archived'])
+    ->name('tests.archived');
+
+Route::post('tests/{test}/restore', [TestController::class, 'restore'])
+    ->name('tests.restore')
+    ->withTrashed();
+
 Route::resource('test-suites', TestSuiteController::class)
     ->except(['create', 'edit']);
 Route::resource('test-suites.tests', TestController::class)

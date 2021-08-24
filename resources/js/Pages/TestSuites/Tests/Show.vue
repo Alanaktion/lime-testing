@@ -1,18 +1,25 @@
 <template>
     <app-layout :title="suite.name">
         <template #header>
-            <div class="flex flex-wrap items-center">
-                <Link :href="route('test-suites.index')" class="font-semibold text-xl text-gray-800 leading-tight">
-                    Test Suites
-                </Link>
-                <ChevronRightIcon class="h-4 w-4 mt-0.5 text-gray-500 mx-2" />
-                <Link :href="route('test-suites.show', suite.id)" class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ suite.name }}
-                </Link>
-                <ChevronRightIcon class="h-4 w-4 mt-0.5 text-gray-500 mx-2" />
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ test ? test.name : 'Create Test' }}
-                </h2>
+            <div class="sm:flex w-full relative">
+                <div class="flex flex-wrap items-center">
+                    <Link :href="route('test-suites.index')" class="font-semibold text-xl text-gray-800 leading-tight">
+                        Test Suites
+                    </Link>
+                    <ChevronRightIcon class="h-4 w-4 mt-0.5 text-gray-500 mx-2" />
+                    <Link :href="route('test-suites.show', suite.id)" class="font-semibold text-xl text-gray-800 leading-tight">
+                        {{ suite.name }}
+                    </Link>
+                    <ChevronRightIcon class="h-4 w-4 mt-0.5 text-gray-500 mx-2" />
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                        {{ test ? test.name : 'Create Test' }}
+                    </h2>
+                </div>
+                <div class="flex mt-3 sm:absolute sm:right-0 sm:-my-1" v-if="test">
+                    <jet-secondary-button @click="archive">
+                        Archive <span class="sr-only">test</span>
+                    </jet-secondary-button>
+                </div>
             </div>
         </template>
 
@@ -62,6 +69,7 @@
 
 <script>
 import { ref } from 'vue'
+import { Inertia } from '@inertiajs/inertia'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ChevronRightIcon } from '@heroicons/vue/outline'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -106,10 +114,17 @@ export default {
             }
         }
 
+        const archive = () => {
+            if (props.test) {
+                Inertia.delete(route('tests.destroy', [props.test.id]))
+            }
+        }
+
         return {
             newStep,
             form,
             save,
+            archive,
         }
     },
 }

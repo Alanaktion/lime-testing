@@ -84,9 +84,15 @@ class TestSuiteController extends Controller
             ->with(['user:id,name'])
             ->orderBy('sort_order')
             ->get();
+
+        $archivedCount = $testSuite->tests()
+            ->onlyTrashed()
+            ->count();
+
         return Inertia::render('TestSuites/Show', [
             'suite' => $testSuite,
             'tests' => $tests,
+            'archivedCount' => $archivedCount,
         ]);
     }
 
