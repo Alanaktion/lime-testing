@@ -30,7 +30,7 @@ class RunPolicy
      */
     public function view(User $user, Run $run)
     {
-        return $user->id === $run->user_id
+        return $user->id == $run->user_id
             || $user->current_team_id == $run->test_suite->team_id;
     }
 
@@ -54,7 +54,7 @@ class RunPolicy
      */
     public function update(User $user, Run $run)
     {
-        return $user->id === $run->user_id;
+        return $user->id == $run->user_id;
     }
 
     /**
@@ -66,6 +66,6 @@ class RunPolicy
      */
     public function delete(User $user, Run $run)
     {
-        return $user->id === $run->user_id;
+        return $user->id == $run->user_id;
     }
 }
