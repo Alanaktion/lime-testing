@@ -25,6 +25,7 @@ class TestFactory extends Factory
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
             'steps' => $this->faker->paragraph,
+            'priority' => Test::PRIORITY_NORMAL,
         ];
     }
 }
