@@ -19,7 +19,7 @@ class CreateTestSuiteTest extends TestCase
         $response = $this->post(route('test-suites.store'), $testSuiteData);
 
         $response->assertRedirect();
-        $path = parse_url($response->headers->get('Location'), PHP_URL_PATH);
+        $path = parse_url($response->headers->get('Location'), PHP_URL_PATH) ?? '';
         $this->assertMatchesRegularExpression('@^/test-suites/[\d]+$@', $path);
     }
 

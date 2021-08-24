@@ -25,7 +25,7 @@ class CreateTestTest extends TestCase
 
         $response->assertRedirect();
 
-        $path = parse_url($response->headers->get('Location'), PHP_URL_PATH);
+        $path = parse_url($response->headers->get('Location'), PHP_URL_PATH) ?? '';
         $this->assertMatchesRegularExpression('@^/tests/[\d]+$@', $path);
     }
 
