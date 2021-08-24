@@ -15,19 +15,19 @@
         "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.2.1",
         "@tailwindcss/typography": "^0.3.0",
-        "@vue/compiler-sfc": "^3.2.4",
+        "@vue/compiler-sfc": "^3.2.6",
         "axios": "^0.21",
         "laravel-mix": "^6.0.28",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "postcss-import": "^12.0.1",
         "tailwindcss": "^2.0.1",
-        "vue": "^3.2.4",
+        "vue": "^3.2.6",
         "vue-loader": "^16.5.0"
     },
     "dependencies": {
         "@headlessui/vue": "^1.4.0",
         "@heroicons/vue": "^1.0.4",
-        "vuedraggable": "^4.0.3"
+        "vuedraggable": "^4.1.0"
     }
 }
