@@ -58,7 +58,7 @@ class TestSortOrderTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_sort_order_cannot_be_changed_when_owned_by_another_team()
+    public function test_sort_order_cannot_be_changed_in_a_suite_owned_by_another_team()
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);
