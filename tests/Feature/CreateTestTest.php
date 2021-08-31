@@ -24,9 +24,7 @@ class CreateTestTest extends TestCase
         $response = $this->post(route('test-suites.tests.store', $testSuite), $testData);
 
         $response->assertRedirect();
-
-        $path = parse_url($response->headers->get('Location'), PHP_URL_PATH) ?? '';
-        $this->assertMatchesRegularExpression('@^/tests/[\d]+$@', $path);
+        $response->assertSessionHas('flash.banner');
     }
 
     public function test_tests_cannot_be_created_without_create_permissions()
