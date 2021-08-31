@@ -52,7 +52,7 @@ class TestController extends Controller
         ]) + [
             'sort_order' => $maxSortOrder + 1,
         ]);
-        return redirect()->route('tests.show', $test)
+        return redirect()->route('test-suites.show', $testSuite)
             ->with('flash.banner', 'Test created successfully.');
     }
 
@@ -85,7 +85,7 @@ class TestController extends Controller
         if ($request->expectsJson()) {
             return $test;
         }
-        return redirect()->route('tests.show', $test)
+        return redirect()->route('test-suites.show', $test->test_suite_id)
             ->with('flash.banner', 'Test updated successfully.');
     }
 
