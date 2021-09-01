@@ -30,7 +30,7 @@ class RunTestPolicy
      */
     public function view(User $user, RunTest $runTest)
     {
-        return $user->id == $runTest->user_id
+        return $user->id == $runTest->run->user_id
             || $user->current_team_id == $runTest->run->testSuite->team_id;
     }
 
@@ -54,7 +54,7 @@ class RunTestPolicy
      */
     public function update(User $user, RunTest $runTest)
     {
-        return $user->id == $runTest->user_id;
+        return $user->id == $runTest->run->user_id;
     }
 
     /**
@@ -66,7 +66,7 @@ class RunTestPolicy
      */
     public function delete(User $user, RunTest $runTest)
     {
-        return $user->id == $runTest->user_id;
+        return $user->id == $runTest->run->user_id;
     }
 
     /**
@@ -78,7 +78,7 @@ class RunTestPolicy
      */
     public function restore(User $user, RunTest $runTest)
     {
-        return $user->id == $runTest->user_id;
+        return $user->id == $runTest->run->user_id;
     }
 
     /**
@@ -90,6 +90,6 @@ class RunTestPolicy
      */
     public function forceDelete(User $user, RunTest $runTest)
     {
-        return $user->id == $runTest->user_id;
+        return $user->id == $runTest->run->user_id;
     }
 }
