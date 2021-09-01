@@ -37,19 +37,14 @@ class TestController extends Controller
     public function store(Request $request, TestSuite $testSuite)
     {
         $this->authorize('view', $testSuite);
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'priority' => 'required|string|in:optional,normal,high',
             'description' => 'nullable|string|max:4096',
             'steps' => 'nullable|string|max:4096',
         ]);
         $maxSortOrder = $testSuite->tests()->max('sort_order');
-        $test = $testSuite->tests()->create($request->only([
-            'name',
-            'priority',
-            'description',
-            'steps',
-        ]) + [
+        $testSuite->tests()->create($data + [
             'sort_order' => $maxSortOrder + 1,
         ]);
         return redirect()->route('test-suites.show', $testSuite)
@@ -67,20 +62,14 @@ class TestController extends Controller
 
     public function update(Request $request, Test $test)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'sometimes|string|max:255',
             'priority' => 'sometimes|string|in:optional,normal,high',
             'description' => 'sometimes|nullable|string|max:4096',
             'steps' => 'sometimes|nullable|string|max:4096',
             'sort_order' => 'sometimes|numeric',
         ]);
-        $test->fill($request->only([
-            'name',
-            'priority',
-            'description',
-            'steps',
-            'sort_order',
-        ]));
+        $test->fill($data);
         $test->save();
         if ($request->expectsJson()) {
             return $test;

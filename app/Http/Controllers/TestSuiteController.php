@@ -46,32 +46,26 @@ class TestSuiteController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:4096',
         ]);
 
         /** @var \App\Models\Team */
         $team = $request->user()->currentTeam;
-        $suite = $team->testSuites()->create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        $suite = $team->testSuites()->create($data);
 
         return redirect()->route('test-suites.show', [$suite]);
     }
 
     public function update(Request $request, TestSuite $testSuite)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:4096',
         ]);
 
-        $testSuite->fill([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        $testSuite->fill($data);
         $testSuite->save();
 
         return redirect()->route('test-suites.show', [$testSuite])

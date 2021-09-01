@@ -48,13 +48,12 @@ class RunController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'test_suite_id' => 'required|integer|exists:test_suites,id',
         ]);
         $testSuite = TestSuite::find($request->input('test_suite_id'));
         $this->authorize('view', $testSuite);
-        $run = Run::forceCreate([
-            'test_suite_id' => $testSuite->id,
+        $run = Run::forceCreate($data + [
             'user_id' => $request->user()->id,
         ]);
         return redirect()->route('runs.show', $run);

@@ -26,7 +26,7 @@ class RunTestController extends Controller
         if ($run->completed_at) {
             abort(400, 'Cannot modify a completed test run');
         }
-        $request->validate([
+        $data = $request->validate([
             'result' => 'sometimes|in:pass,fail,skip',
             'comment' => 'sometimes|nullable|string',
         ]);
@@ -36,7 +36,7 @@ class RunTestController extends Controller
             $runTest = RunTest::updateOrCreate([
                 'run_id' => $run->id,
                 'test_id' => $test->id,
-            ], $request->only(['result', 'comment']));
+            ], $data);
         } finally {
             RunTest::reguard();
         }
