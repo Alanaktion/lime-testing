@@ -7,6 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @property int $id
+ * @property int $test_suite_id
+ * @property int $user_id
+ * @property string $name
+ * @property string $description
+ * @property string $steps
+ * @property float $sort_order
+ * @property string $priority
+ * @property-read bool $required
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property TestSuite $testSuite
+ * @property User $user
+ */
 class Test extends Model
 {
     use HasFactory;
@@ -16,6 +32,7 @@ class Test extends Model
     public const PRIORITY_NORMAL = 'normal';
     public const PRIORITY_HIGH = 'high';
 
+    /** @var string[] */
     protected $fillable = [
         'name',
         'description',
@@ -24,6 +41,7 @@ class Test extends Model
         'priority',
     ];
 
+    /** @var string[] */
     protected $appends = [
         'required',
     ];

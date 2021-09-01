@@ -1,0 +1,19 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    excludePaths:
+        - app/Actions/Fortify/*
+        - app/Actions/Jetstream/*
+
+    level: 7
+
+    ignoreErrors:
+        # Don't require explicit return types on controller actions
+        - '#Method App\\Http\\Controllers\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return typehint specified.#'
+        # Don't require explicit return types on model relations
+        - '#Method App\\Models\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return typehint specified.#'

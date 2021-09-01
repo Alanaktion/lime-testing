@@ -17,11 +17,6 @@ class RunController extends Controller
         $this->authorizeResource(Run::class, 'run');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $runs = Run::with([
@@ -40,12 +35,6 @@ class RunController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -59,12 +48,6 @@ class RunController extends Controller
         return redirect()->route('runs.show', $run);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Run  $run
-     * @return \Illuminate\Http\Response
-     */
     public function show(Run $run)
     {
         $run->load([
@@ -83,13 +66,9 @@ class RunController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified run.
      *
      * Currently always closes the run, but could do more in the future.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Run  $run
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Run $run)
     {
@@ -98,10 +77,13 @@ class RunController extends Controller
         }
 
         // Set the result based on the test data
-        $run->load('runTests:id,run_id,result');
+        $run->load([
+            'runTests:id,run_id,result',
+            'runTests.test:id,priority',
+        ]);
         $run->result = RunTest::RESULT_PASS;
         foreach ($run->runTests as $runTest) {
-            if ($runTest->result == RunTest::RESULT_FAIL && $runTest->required) {
+            if ($runTest->result == RunTest::RESULT_FAIL && $runTest->test->required) {
                 $run->result = RunTest::RESULT_FAIL;
                 break;
             }

@@ -11,6 +11,22 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Team $currentTeam
+ * @property int|null $current_team_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|Team[] $teams
+ * @property-read \Illuminate\Database\Eloquent\Collection|Test[] $tests
+ * @property-read \Illuminate\Database\Eloquent\Collection|Run[] $runs
+ * @property Run $latestRun
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -23,7 +39,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -32,7 +48,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var string[]
      */
     protected $hidden = [
         'password',
@@ -44,7 +60,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -53,7 +69,7 @@ class User extends Authenticatable
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var string[]
      */
     protected $appends = [
         'profile_photo_url',

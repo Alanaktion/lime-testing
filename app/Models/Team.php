@@ -8,6 +8,13 @@ use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property bool $personal_team
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class Team extends JetstreamTeam
 {
     use HasFactory;
@@ -15,7 +22,7 @@ class Team extends JetstreamTeam
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var string[]
      */
     protected $casts = [
         'personal_team' => 'boolean',
@@ -24,7 +31,7 @@ class Team extends JetstreamTeam
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name',
@@ -34,7 +41,7 @@ class Team extends JetstreamTeam
     /**
      * The event map for the model.
      *
-     * @var array
+     * @var array<string, class-string>
      */
     protected $dispatchesEvents = [
         'created' => TeamCreated::class,
