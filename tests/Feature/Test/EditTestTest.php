@@ -1,18 +1,20 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Test;
 
 use App\Models\Test;
 use App\Models\TestSuite;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CreateTestTest extends TestCase
+class EditTestTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
-    public function test_tests_can_be_created()
+    public function test_tests_can_be_edited()
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -20,14 +22,17 @@ class CreateTestTest extends TestCase
             ->for($user->currentTeam)
             ->create();
 
-        $testData = Test::factory()->make()->toArray();
-        $response = $this->post(route('test-suites.tests.store', $testSuite), $testData);
+        $test = Test::factory()->create(['test_suite_id' => $testSuite->id]);
+
+        $response = $this->patch(route('tests.update', $test), [
+            'name' => $this->faker->sentence,
+        ]);
 
         $response->assertRedirect();
         $response->assertSessionHas('flash.banner');
     }
 
-    public function test_tests_cannot_be_created_without_create_permissions()
+    public function test_tests_cannot_be_edited_without_create_permissions()
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -41,13 +46,16 @@ class CreateTestTest extends TestCase
             ->for($teamOwner->currentTeam)
             ->create();
 
-        $testData = Test::factory()->make()->toArray();
-        $response = $this->post(route('test-suites.tests.store', $testSuite), $testData);
+        $test = Test::factory()->create(['test_suite_id' => $testSuite->id]);
+
+        $response = $this->patch(route('tests.update', $test), [
+            'name' => $this->faker->sentence,
+        ]);
 
         $response->assertStatus(403);
     }
 
-    public function test_tests_cannot_be_added_to_a_suite_owned_by_another_team()
+    public function test_tests_cannot_be_edited_in_a_suite_owned_by_another_team()
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);
@@ -57,8 +65,11 @@ class CreateTestTest extends TestCase
             ->for($otherUser->currentTeam)
             ->create();
 
-        $testData = Test::factory()->make()->toArray();
-        $response = $this->post(route('test-suites.tests.store', $testSuite), $testData);
+        $test = Test::factory()->create(['test_suite_id' => $testSuite->id]);
+
+        $response = $this->patch(route('tests.update', $test), [
+            'name' => $this->faker->sentence,
+        ]);
 
         $response->assertStatus(403);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Run;
 
 use App\Models\Run;
 use App\Models\TestSuite;

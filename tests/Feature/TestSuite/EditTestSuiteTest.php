@@ -1,20 +1,18 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\TestSuite;
 
-use App\Models\Test;
 use App\Models\TestSuite;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class EditTestTest extends TestCase
+class EditTestSuiteTest extends TestCase
 {
-    use RefreshDatabase;
-    use WithFaker;
+    use RefreshDatabase, WithFaker;
 
-    public function test_tests_can_be_edited()
+    public function test_test_suites_can_be_edited()
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -22,17 +20,16 @@ class EditTestTest extends TestCase
             ->for($user->currentTeam)
             ->create();
 
-        $test = Test::factory()->create(['test_suite_id' => $testSuite->id]);
-
-        $response = $this->patch(route('tests.update', $test), [
-            'name' => $this->faker->sentence,
+        $response = $this->patch(route('test-suites.update', $testSuite), [
+            'name' => $this->faker->name,
         ]);
 
         $response->assertRedirect();
-        $response->assertSessionHas('flash.banner');
+        $path = parse_url($response->headers->get('Location'), PHP_URL_PATH) ?? '';
+        $this->assertMatchesRegularExpression('@^/test-suites/[\d]+$@', $path);
     }
 
-    public function test_tests_cannot_be_edited_without_create_permissions()
+    public function test_test_suites_cannot_be_edited_without_edit_permissions()
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -46,16 +43,13 @@ class EditTestTest extends TestCase
             ->for($teamOwner->currentTeam)
             ->create();
 
-        $test = Test::factory()->create(['test_suite_id' => $testSuite->id]);
-
-        $response = $this->patch(route('tests.update', $test), [
-            'name' => $this->faker->sentence,
+        $response = $this->patch(route('test-suites.update', $testSuite), [
+            'name' => $this->faker->name,
         ]);
-
         $response->assertStatus(403);
     }
 
-    public function test_tests_cannot_be_edited_in_a_suite_owned_by_another_team()
+    public function test_test_suites_cannot_be_edited_by_another_team()
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);
@@ -65,12 +59,9 @@ class EditTestTest extends TestCase
             ->for($otherUser->currentTeam)
             ->create();
 
-        $test = Test::factory()->create(['test_suite_id' => $testSuite->id]);
-
-        $response = $this->patch(route('tests.update', $test), [
-            'name' => $this->faker->sentence,
+        $response = $this->patch(route('test-suites.update', $testSuite), [
+            'name' => $this->faker->name,
         ]);
-
         $response->assertStatus(403);
     }
 }

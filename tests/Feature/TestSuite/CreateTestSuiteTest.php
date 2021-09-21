@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\TestSuite;
 
 use App\Models\TestSuite;
 use App\Models\User;
