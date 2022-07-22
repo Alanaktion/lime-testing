@@ -51,7 +51,7 @@
                             placeholder="Suite name" required
                         />
 
-                        <jet-button type="submit" class="mt-2 w-full sm:mt-0 sm:w-auto sm:ml-2 flex-shrink-0">
+                        <jet-button type="submit" class="mt-2 w-full sm:mt-0 sm:w-auto sm:ml-2 shrink-0">
                             Create Suite
                         </jet-button>
                     </form>
@@ -72,7 +72,7 @@
                         placeholder="Suite name" required autofocus
                     />
 
-                    <jet-button type="submit" class="mt-2 w-full sm:mt-0 sm:w-auto sm:ml-2 flex-shrink-0">
+                    <jet-button type="submit" class="mt-2 w-full sm:mt-0 sm:w-auto sm:ml-2 shrink-0">
                         Create Suite
                     </jet-button>
                 </form>

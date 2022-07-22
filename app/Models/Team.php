@@ -22,7 +22,7 @@ class Team extends JetstreamTeam
     /**
      * The attributes that should be cast to native types.
      *
-     * @var string[]
+     * @var array<string, string>
      */
     protected $casts = [
         'personal_team' => 'boolean',

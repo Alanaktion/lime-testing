@@ -1,17 +1,28 @@
-<template>
-    <input class="input" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input">
-</template>
+<script setup>
+import { onMounted, ref } from 'vue';
 
-<script>
-    export default {
-        props: ['modelValue'],
+defineProps({
+    modelValue: String,
+});
 
-        emits: ['update:modelValue'],
+defineEmits(['update:modelValue']);
 
-        methods: {
-            focus() {
-                this.$refs.input.focus()
-            }
-        }
+const input = ref(null);
+
+onMounted(() => {
+    if (input.value.hasAttribute('autofocus')) {
+        input.value.focus();
     }
+});
+
+defineExpose({ focus: () => input.value.focus() });
 </script>
+
+<template>
+    <input
+        ref="input"
+        class="input"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+    >
+</template>

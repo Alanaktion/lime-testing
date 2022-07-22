@@ -14,10 +14,10 @@
         @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-300;
     }
     .btn--secondary {
-        @apply bg-white border-gray-300 text-gray-700 shadow-sm hover:text-gray-500 focus:border-blue-300 focus:ring-blue-200 active:text-gray-800 active:bg-gray-50;
+        @apply bg-white border-gray-300 text-gray-700 shadow-sm hover:text-gray-500 focus:border-sky-300 focus:ring-sky-200 active:text-gray-800 active:bg-gray-50;
     }
 
     .input {
-        @apply border-gray-300 focus:border-lime-500 focus:ring focus:ring-lime-300 focus:ring-opacity-50 rounded-md shadow-sm;
+        @apply border-gray-300 focus:border-lime-500 focus:ring focus:ring-lime-300/50 rounded-md shadow-sm;
     }
 }

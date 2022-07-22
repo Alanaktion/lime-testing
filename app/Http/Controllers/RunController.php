@@ -78,7 +78,7 @@ class RunController extends Controller
 
         // Set the result based on the test data
         $run->load([
-            'runTests:id,run_id,result',
+            'runTests:id,run_id,test_id,result',
             'runTests.test:id,priority',
         ]);
         $run->result = RunTest::RESULT_PASS;

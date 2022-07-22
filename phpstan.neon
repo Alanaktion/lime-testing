@@ -14,6 +14,8 @@ parameters:
 
     ignoreErrors:
         # Don't require explicit return types on controller actions
-        - '#Method App\\Http\\Controllers\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return typehint specified.#'
+        - '#Method App\\Http\\Controllers\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return type specified.#'
         # Don't require explicit return types on model relations
-        - '#Method App\\Models\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return typehint specified.#'
+        - '#Method App\\Models\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return type specified.#'
+        # Implicit relations seem to have issues right now
+        - '#Relation .(testSuite). is not found in App\\Models\\[a-zA-Z]+ model.#'

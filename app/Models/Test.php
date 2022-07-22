@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -55,9 +56,16 @@ class Test extends Model
         });
     }
 
-    public function getRequiredAttribute(): bool
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function required(): Attribute
     {
-        return $this->priority !== self::PRIORITY_OPTIONAL;
+        return Attribute::make(
+            get: function () {
+                return $this->priority !== self::PRIORITY_OPTIONAL;
+            },
+        );
     }
 
     public function testSuite()

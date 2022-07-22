@@ -1,10 +1,5 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
-
 module.exports = {
-    mode: 'jit',
-
-    purge: [
+    content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
@@ -13,28 +8,11 @@ module.exports = {
     ],
 
     theme: {
-        colors: {
-            transparent: 'transparent',
-            current: 'currentColor',
-            black: colors.black,
-            white: colors.white,
-            gray: colors.gray,
-            red: colors.rose,
-            yellow: colors.amber,
-            lime: colors.lime,
-            blue: colors.sky,
-        },
         screens: {
             sm: '640px',
             md: '768px',
             lg: '1024px',
             xl: '1280px',
-        },
-    },
-
-    variants: {
-        extend: {
-            opacity: ['disabled'],
         },
     },
 

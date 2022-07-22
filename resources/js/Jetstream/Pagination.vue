@@ -1,8 +1,17 @@
+<script setup>
+import { Link } from '@inertiajs/inertia-vue3'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
+
+defineProps({
+    paginator: Object,
+});
+</script>
+
 <template>
     <div class="px-4 py-3 flex items-center justify-between sm:px-0" v-if="paginator.last_page > 1">
         <div class="flex-1 flex justify-between sm:hidden">
             <component
-                :is="paginator.prev_page_url ? 'link' : 'span'"
+                :is="paginator.prev_page_url ? 'Link' : 'span'"
                 :href="paginator.prev_page_url"
                 :class="{
                     'relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white': true,
@@ -12,7 +21,7 @@
                 Previous
             </component>
             <component
-                :is="paginator.next_page_url ? 'link' : 'span'"
+                :is="paginator.next_page_url ? 'Link' : 'span'"
                 :href="paginator.next_page_url"
                 :class="{
                     'ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white': true,
@@ -75,19 +84,3 @@
         </div>
     </div>
 </template>
-
-<script>
-import { Link } from '@inertiajs/inertia-vue3'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
-
-export default {
-    components: {
-        Link,
-        ChevronLeftIcon,
-        ChevronRightIcon,
-    },
-    props: {
-        paginator: Object,
-    },
-}
-</script>
