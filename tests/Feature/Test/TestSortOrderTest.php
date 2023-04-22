@@ -12,7 +12,7 @@ class TestSortOrderTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_sort_order_can_be_updated_with_json()
+    public function test_sort_order_can_be_updated_with_json(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -34,7 +34,7 @@ class TestSortOrderTest extends TestCase
         ]);
     }
 
-    public function test_sort_order_cannot_be_changed_without_update_permission()
+    public function test_sort_order_cannot_be_changed_without_update_permission(): void
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -58,7 +58,7 @@ class TestSortOrderTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_sort_order_cannot_be_changed_in_a_suite_owned_by_another_team()
+    public function test_sort_order_cannot_be_changed_in_a_suite_owned_by_another_team(): void
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);

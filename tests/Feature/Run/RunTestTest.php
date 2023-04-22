@@ -16,7 +16,7 @@ class RunTestTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function test_run_tests_can_be_updated()
+    public function test_run_tests_can_be_updated(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -45,7 +45,7 @@ class RunTestTest extends TestCase
         ]);
     }
 
-    public function test_run_tests_can_have_comments()
+    public function test_run_tests_can_have_comments(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -76,7 +76,7 @@ class RunTestTest extends TestCase
         ]);
     }
 
-    public function test_run_tests_cannot_be_updated_on_completed_run()
+    public function test_run_tests_cannot_be_updated_on_completed_run(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -103,7 +103,7 @@ class RunTestTest extends TestCase
     }
 
     // test run tests cannot be updated by another user
-    public function test_run_tests_cannot_be_updated_by_another_user()
+    public function test_run_tests_cannot_be_updated_by_another_user(): void
     {
         $otherUser = User::factory()->withPersonalTeam()->create();
         /** @var User */

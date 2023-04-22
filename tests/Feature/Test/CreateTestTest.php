@@ -12,7 +12,7 @@ class CreateTestTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_tests_can_be_created()
+    public function test_tests_can_be_created(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -27,7 +27,7 @@ class CreateTestTest extends TestCase
         $response->assertSessionHas('flash.banner');
     }
 
-    public function test_tests_cannot_be_created_without_create_permissions()
+    public function test_tests_cannot_be_created_without_create_permissions(): void
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -47,7 +47,7 @@ class CreateTestTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_tests_cannot_be_added_to_a_suite_owned_by_another_team()
+    public function test_tests_cannot_be_added_to_a_suite_owned_by_another_team(): void
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);

@@ -14,7 +14,7 @@ class RunTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function test_runs_can_be_started()
+    public function test_runs_can_be_started(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -33,7 +33,7 @@ class RunTest extends TestCase
         $this->assertMatchesRegularExpression('@^/runs/[\d]+$@', $path);
     }
 
-    public function test_runs_can_be_started_without_write_permissions()
+    public function test_runs_can_be_started_without_write_permissions(): void
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -58,7 +58,7 @@ class RunTest extends TestCase
         $this->assertMatchesRegularExpression('@^/runs/[\d]+$@', $path);
     }
 
-    public function test_runs_cannot_be_started_for_a_suite_owned_by_another_team()
+    public function test_runs_cannot_be_started_for_a_suite_owned_by_another_team(): void
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);
@@ -76,7 +76,7 @@ class RunTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_runs_can_be_finished()
+    public function test_runs_can_be_finished(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -94,7 +94,7 @@ class RunTest extends TestCase
         $response->assertRedirect(route('runs.index'));
     }
 
-    public function test_runs_can_be_canceled()
+    public function test_runs_can_be_canceled(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -112,7 +112,7 @@ class RunTest extends TestCase
         $response->assertRedirect(route('dashboard'));
     }
 
-    public function test_runs_cannot_be_changed_by_others()
+    public function test_runs_cannot_be_changed_by_others(): void
     {
         $otherUser = User::factory()->withPersonalTeam()->create();
         /** @var User */
@@ -136,7 +136,7 @@ class RunTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_runs_cannot_be_accessed_by_other_teams()
+    public function test_runs_cannot_be_accessed_by_other_teams(): void
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);

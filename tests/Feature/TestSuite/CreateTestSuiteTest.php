@@ -11,7 +11,7 @@ class CreateTestSuiteTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_test_suites_can_be_created()
+    public function test_test_suites_can_be_created(): void
     {
         $this->actingAs(User::factory()->withPersonalTeam()->create());
 
@@ -23,7 +23,7 @@ class CreateTestSuiteTest extends TestCase
         $this->assertMatchesRegularExpression('@^/test-suites/[\d]+$@', $path);
     }
 
-    public function test_test_suites_cannot_be_created_without_create_permissions()
+    public function test_test_suites_cannot_be_created_without_create_permissions(): void
     {
         /** @var User */
         $actingUser = User::factory()->create();
