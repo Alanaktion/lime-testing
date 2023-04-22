@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TestSortOrderTest extends TestCase
+final class TestSortOrderTest extends TestCase
 {
     use RefreshDatabase;
 

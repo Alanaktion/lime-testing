@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class RunTestTest extends TestCase
+final class RunTestTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;

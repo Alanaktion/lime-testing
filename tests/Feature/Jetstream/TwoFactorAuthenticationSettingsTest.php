@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TwoFactorAuthenticationSettingsTest extends TestCase
+final class TwoFactorAuthenticationSettingsTest extends TestCase
 {
     use RefreshDatabase;
 
