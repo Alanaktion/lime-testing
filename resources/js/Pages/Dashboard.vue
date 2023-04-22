@@ -8,9 +8,9 @@
 
         <div class="container py-4 lg:py-6">
             <div class="flex items-center self-center px-4 sm:px-0">
-                <img :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name" class="rounded-full h-16 w-16 object-cover shadow-md">
+                <img :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name" class="rounded-full h-16 w-16 object-cover shadow-md">
                 <div class="text-xl font-semibold ml-4">
-                    {{ $page.props.user.name }}
+                    {{ $page.props.auth.user.name }}
                 </div>
             </div>
 

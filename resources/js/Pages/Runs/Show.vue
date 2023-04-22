@@ -28,7 +28,7 @@
 
         <div class="container py-4 lg:py-6"
             v-if="run.test_suite?.tests && (
-                $page.props.user.id == run.user_id || run.completed_at !== null
+                $page.props.auth.user.id == run.user_id || run.completed_at !== null
             )">
             <run-test
                 v-for="test in run.test_suite.tests"
@@ -42,7 +42,7 @@
                 End Test
             </jet-button>
         </div>
-        <div v-else-if="$page.props.user.id != run.user_id">
+        <div v-else-if="$page.props.auth.user.id != run.user_id">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg py-6 lg:py-12 my-8">
                 <p class="text-center">
                     Test run unavailable
