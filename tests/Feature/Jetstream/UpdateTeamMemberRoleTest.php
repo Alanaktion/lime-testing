@@ -10,12 +10,13 @@ class UpdateTeamMemberRoleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_team_member_roles_can_be_updated()
+    public function test_team_member_roles_can_be_updated(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
         $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(), ['role' => 'admin']
+            $otherUser = User::factory()->create(),
+            ['role' => 'admin']
         );
 
         $response = $this->put('/teams/'.$user->currentTeam->id.'/members/'.$otherUser->id, [
@@ -23,16 +24,18 @@ class UpdateTeamMemberRoleTest extends TestCase
         ]);
 
         $this->assertTrue($otherUser->fresh()->hasTeamRole(
-            $user->currentTeam->fresh(), 'tester'
+            $user->currentTeam->fresh(),
+            'tester'
         ));
     }
 
-    public function test_only_team_owner_can_update_team_member_roles()
+    public function test_only_team_owner_can_update_team_member_roles(): void
     {
         $user = User::factory()->withPersonalTeam()->create();
 
         $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(), ['role' => 'admin']
+            $otherUser = User::factory()->create(),
+            ['role' => 'admin']
         );
 
         $this->actingAs($otherUser);
@@ -42,7 +45,8 @@ class UpdateTeamMemberRoleTest extends TestCase
         ]);
 
         $this->assertTrue($otherUser->fresh()->hasTeamRole(
-            $user->currentTeam->fresh(), 'admin'
+            $user->currentTeam->fresh(),
+            'admin'
         ));
     }
 }

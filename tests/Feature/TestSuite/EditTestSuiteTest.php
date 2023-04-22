@@ -10,9 +10,10 @@ use Tests\TestCase;
 
 class EditTestSuiteTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
+    use WithFaker;
 
-    public function test_test_suites_can_be_edited()
+    public function test_test_suites_can_be_edited(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -29,7 +30,7 @@ class EditTestSuiteTest extends TestCase
         $this->assertMatchesRegularExpression('@^/test-suites/[\d]+$@', $path);
     }
 
-    public function test_test_suites_cannot_be_edited_without_edit_permissions()
+    public function test_test_suites_cannot_be_edited_without_edit_permissions(): void
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -49,7 +50,7 @@ class EditTestSuiteTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_test_suites_cannot_be_edited_by_another_team()
+    public function test_test_suites_cannot_be_edited_by_another_team(): void
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);

@@ -132,7 +132,7 @@ return [
     */
 
     'features' => array_merge(env('ALLOW_REGISTRATION', true) ? [
-        Features::registration()
+        Features::registration(),
     ] : [], [
         Features::resetPasswords(),
         // Features::emailVerification(),

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -24,17 +26,26 @@ class Run extends Model
     /** @var string[] */
     protected $dates = ['completed_at'];
 
-    public function testSuite()
+    /**
+     * @return BelongsTo<TestSuite, Run>
+     */
+    public function testSuite(): BelongsTo
     {
         return $this->belongsTo(TestSuite::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, Run>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function runTests()
+    /**
+     * @return HasMany<RunTest>
+     */
+    public function runTests(): HasMany
     {
         return $this->hasMany(RunTest::class);
     }

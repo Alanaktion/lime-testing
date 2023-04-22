@@ -20,16 +20,17 @@ class RunController extends Controller
     public function index()
     {
         $runs = Run::with([
-                'user:id,name',
-                'testSuite' => function ($query) {
-                    $query->withTrashed()->select('id', 'name');
-                },
-            ])
+            'user:id,name',
+            'testSuite' => function ($query) {
+                $query->withTrashed()->select('id', 'name');
+            },
+        ])
             ->whereHas('testSuite', function ($query) {
                 $query->where('team_id', Auth::user()->current_team_id);
             })
             ->latest()
             ->paginate();
+
         return Inertia::render('Runs/Index', [
             'runs' => $runs,
         ]);
@@ -45,6 +46,7 @@ class RunController extends Controller
         $run = Run::forceCreate($data + [
             'user_id' => $request->user()->id,
         ]);
+
         return redirect()->route('runs.show', $run);
     }
 
@@ -60,6 +62,7 @@ class RunController extends Controller
             },
             'runTests',
         ]);
+
         return Inertia::render('Runs/Show', [
             'run' => $run,
         ]);
@@ -104,6 +107,7 @@ class RunController extends Controller
         }
 
         $run->delete();
+
         return redirect()->route('dashboard')
             ->with('flash.banner', 'Test run canceled.');
     }

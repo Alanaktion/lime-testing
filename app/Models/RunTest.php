@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
@@ -21,15 +22,23 @@ class RunTest extends Model
     use HasFactory;
 
     public const RESULT_PASS = 'pass';
+
     public const RESULT_FAIL = 'fail';
+
     public const RESULT_SKIP = 'skip';
 
-    public function run()
+    /**
+     * @return BelongsTo<Run, RunTest>
+     */
+    public function run(): BelongsTo
     {
         return $this->belongsTo(Run::class);
     }
 
-    public function test()
+    /**
+     * @return BelongsTo<Test, RunTest>
+     */
+    public function test(): BelongsTo
     {
         return $this->belongsTo(Test::class);
     }

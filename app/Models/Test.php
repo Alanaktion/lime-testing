@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,9 @@ class Test extends Model
     use SoftDeletes;
 
     public const PRIORITY_OPTIONAL = 'optional';
+
     public const PRIORITY_NORMAL = 'normal';
+
     public const PRIORITY_HIGH = 'high';
 
     /** @var string[] */
@@ -68,12 +71,18 @@ class Test extends Model
         );
     }
 
-    public function testSuite()
+    /**
+     * @return BelongsTo<TestSuite, Test>
+     */
+    public function testSuite(): BelongsTo
     {
         return $this->belongsTo(TestSuite::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, Test>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

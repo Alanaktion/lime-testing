@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -82,20 +83,29 @@ class User extends Authenticatable
      */
     protected function defaultProfilePhotoUrl()
     {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=84CC16&background=ECFCCB';
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=84CC16&background=ECFCCB';
     }
 
-    public function tests()
+    /**
+     * @return HasMany<Test>
+     */
+    public function tests(): HasMany
     {
         return $this->hasMany(Test::class);
     }
 
-    public function runs()
+    /**
+     * @return HasMany<Run>
+     */
+    public function runs(): HasMany
     {
         return $this->hasMany(Run::class);
     }
 
-    public function latestRun()
+    /**
+     * @return HasOne<Run>
+     */
+    public function latestRun(): HasOne
     {
         return $this->hasOne(Run::class)->ofMany([
             'completed_at' => 'max',

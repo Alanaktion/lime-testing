@@ -32,7 +32,7 @@
             <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
                 <div v-if="tests.length">
                     <Draggable
-                        v-model="tests"
+                        v-model="testsModel"
                         item-key="id"
                         handle=".handle"
                         ghost-class="opacity-50"
@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import { Link, useForm } from '@inertiajs/inertia-vue3'
 import { ChevronRightIcon, PencilAltIcon, MenuIcon } from '@heroicons/vue/outline'
@@ -191,6 +191,8 @@ export default {
             })
         }
 
+        const testsModel = computed(() => props.test)
+
         return {
             editing,
             form,
@@ -199,6 +201,7 @@ export default {
             archive,
             getStepCount,
             updateSort,
+            testsModel,
         }
     },
 }

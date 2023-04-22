@@ -14,7 +14,7 @@ class EditTestTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function test_tests_can_be_edited()
+    public function test_tests_can_be_edited(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -32,7 +32,7 @@ class EditTestTest extends TestCase
         $response->assertSessionHas('flash.banner');
     }
 
-    public function test_tests_cannot_be_edited_without_create_permissions()
+    public function test_tests_cannot_be_edited_without_create_permissions(): void
     {
         /** @var User */
         $actingUser = User::factory()->create();
@@ -55,7 +55,7 @@ class EditTestTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_tests_cannot_be_edited_in_a_suite_owned_by_another_team()
+    public function test_tests_cannot_be_edited_in_a_suite_owned_by_another_team(): void
     {
         $actingUser = User::factory()->withPersonalTeam()->create();
         $this->actingAs($actingUser);

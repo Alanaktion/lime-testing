@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -26,22 +29,34 @@ class TestSuite extends Model
     /** @var string[] */
     protected $fillable = ['name', 'description'];
 
-    public function team()
+    /**
+     * @return BelongsTo<Team, TestSuite>
+     */
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function tests()
+    /**
+     * @return HasMany<Test>
+     */
+    public function tests(): HasMany
     {
         return $this->hasMany(Test::class);
     }
 
-    public function runs()
+    /**
+     * @return HasMany<Run>
+     */
+    public function runs(): HasMany
     {
         return $this->hasMany(Run::class);
     }
 
-    public function latestRun()
+    /**
+     * @return HasOne<Run>
+     */
+    public function latestRun(): HasOne
     {
         return $this->hasOne(Run::class)->ofMany([
             'completed_at' => 'max',

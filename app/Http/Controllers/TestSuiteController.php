@@ -27,6 +27,7 @@ class TestSuiteController extends Controller
         $archivedCount = $team->testSuites()
             ->onlyTrashed()
             ->count();
+
         return Inertia::render('TestSuites/Index', [
             'testSuites' => $testSuites,
             'archivedCount' => $archivedCount,
@@ -39,6 +40,7 @@ class TestSuiteController extends Controller
             ->onlyTrashed()
             ->orderBy('name')
             ->get();
+
         return Inertia::render('TestSuites/Archived', [
             'testSuites' => $testSuites,
         ]);
@@ -93,6 +95,7 @@ class TestSuiteController extends Controller
     public function destroy(TestSuite $testSuite)
     {
         $testSuite->delete();
+
         return redirect()->route('test-suites.index')
             ->with('flash.banner', 'Test suite archived.');
     }
@@ -101,6 +104,7 @@ class TestSuiteController extends Controller
     {
         $this->authorize('restore', $testSuite);
         $testSuite->restore();
+
         return redirect()->route('test-suites.index')
             ->with('flash.banner', 'Test suite restored.');
     }

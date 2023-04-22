@@ -1,5 +1,5 @@
 <template>
-    <RadioGroup v-model="modelValue">
+    <RadioGroup v-model="value">
         <RadioGroupLabel class="block font-medium text-sm text-gray-700">
             Priority
         </RadioGroupLabel>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { watch, toRefs } from 'vue'
+import { computed, watch, toRefs } from 'vue'
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
 
 export default {
@@ -50,6 +50,19 @@ export default {
     setup(props, context) {
         const { modelValue } = toRefs(props)
         watch(modelValue, val => context.emit('update:modelValue', val))
+
+        const value = computed({
+            get() {
+                return modelValue.value
+            },
+            set(val) {
+                context.emit('update:modelValue', val)
+            },
+        })
+
+        return {
+            value,
+        }
     },
 }
 </script>

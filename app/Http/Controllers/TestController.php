@@ -18,6 +18,7 @@ class TestController extends Controller
     public function create(TestSuite $testSuite)
     {
         $this->authorize('view', $testSuite);
+
         return Inertia::render('TestSuites/Tests/Show', [
             'suite' => $testSuite,
         ]);
@@ -28,6 +29,7 @@ class TestController extends Controller
         $tests = $testSuite->tests()
             ->onlyTrashed()
             ->get();
+
         return Inertia::render('TestSuites/Tests/Archived', [
             'suite' => $testSuite,
             'tests' => $tests,
@@ -47,6 +49,7 @@ class TestController extends Controller
         $testSuite->tests()->create($data + [
             'sort_order' => $maxSortOrder + 1,
         ]);
+
         return redirect()->route('test-suites.show', $testSuite)
             ->with('flash.banner', 'Test created successfully.');
     }
@@ -54,6 +57,7 @@ class TestController extends Controller
     public function show(Test $test)
     {
         $test->load('testSuite');
+
         return Inertia::render('TestSuites/Tests/Show', [
             'test' => $test,
             'suite' => $test->testSuite,
@@ -74,6 +78,7 @@ class TestController extends Controller
         if ($request->expectsJson()) {
             return $test;
         }
+
         return redirect()->route('test-suites.show', $test->test_suite_id)
             ->with('flash.banner', 'Test updated successfully.');
     }
@@ -82,6 +87,7 @@ class TestController extends Controller
     {
         $testSuite = $test->testSuite;
         $test->delete();
+
         return redirect()->route('test-suites.show', $testSuite)
             ->with('flash.banner', 'Test archived.');
     }
@@ -90,6 +96,7 @@ class TestController extends Controller
     {
         $this->authorize('restore', $test);
         $test->restore();
+
         return redirect()->route('test-suites.show', $test->test_suite_id)
             ->with('flash.banner', 'Test restored.');
     }
