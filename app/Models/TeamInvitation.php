@@ -20,7 +20,7 @@ class TeamInvitation extends JetstreamTeamInvitation
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [
         'email',
@@ -30,7 +30,7 @@ class TeamInvitation extends JetstreamTeamInvitation
     /**
      * Get the team that the invitation belongs to.
      *
-     * @return BelongsTo<Team, TeamInvitation>
+     * @return BelongsTo<\Illuminate\Database\Eloquent\Model, $this>
      */
     public function team(): BelongsTo
     {

@@ -23,11 +23,11 @@ class Run extends Model
 {
     use HasFactory;
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $dates = ['completed_at'];
 
     /**
-     * @return BelongsTo<TestSuite, Run>
+     * @return BelongsTo<TestSuite, $this>
      */
     public function testSuite(): BelongsTo
     {
@@ -35,7 +35,7 @@ class Run extends Model
     }
 
     /**
-     * @return BelongsTo<User, Run>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -43,7 +43,7 @@ class Run extends Model
     }
 
     /**
-     * @return HasMany<RunTest>
+     * @return HasMany<RunTest, $this>
      */
     public function runTests(): HasMany
     {

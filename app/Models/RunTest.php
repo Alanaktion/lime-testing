@@ -28,7 +28,7 @@ class RunTest extends Model
     public const RESULT_SKIP = 'skip';
 
     /**
-     * @return BelongsTo<Run, RunTest>
+     * @return BelongsTo<Run, $this>
      */
     public function run(): BelongsTo
     {
@@ -36,7 +36,7 @@ class RunTest extends Model
     }
 
     /**
-     * @return BelongsTo<Test, RunTest>
+     * @return BelongsTo<Test, $this>
      */
     public function test(): BelongsTo
     {

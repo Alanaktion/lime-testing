@@ -32,7 +32,7 @@ class Team extends JetstreamTeam
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -51,7 +51,7 @@ class Team extends JetstreamTeam
     ];
 
     /**
-     * @return HasMany<TestSuite>
+     * @return HasMany<TestSuite, $this>
      */
     public function testSuites(): HasMany
     {

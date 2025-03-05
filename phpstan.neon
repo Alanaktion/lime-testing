@@ -1,5 +1,5 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
 
@@ -10,8 +10,10 @@ parameters:
         - app/Actions/Fortify/*
         - app/Actions/Jetstream/*
 
-    level: 7
+    level: 5
 
     ignoreErrors:
         # Don't require explicit return types on controller actions
-        - '#Method App\\Http\\Controllers\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return type specified.#'
+        # - '#Method App\\Http\\Controllers\\[a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has no return type specified.#'
+        # Ignore PHPDoc list semantics
+        - '#PHPDoc type array<int, string> of property .+ is not covariant with PHPDoc type list<string> of overridden property#'

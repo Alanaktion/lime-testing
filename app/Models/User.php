@@ -40,7 +40,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -70,7 +70,7 @@ class User extends Authenticatable
     /**
      * The accessors to append to the model's array form.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $appends = [
         'profile_photo_url',
@@ -87,7 +87,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany<Test>
+     * @return HasMany<Test, $this>
      */
     public function tests(): HasMany
     {
@@ -95,7 +95,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany<Run>
+     * @return HasMany<Run, $this>
      */
     public function runs(): HasMany
     {
@@ -103,7 +103,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasOne<Run>
+     * @return HasOne<Run, $this>
      */
     public function latestRun(): HasOne
     {

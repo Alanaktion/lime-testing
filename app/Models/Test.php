@@ -36,7 +36,7 @@ class Test extends Model
 
     public const PRIORITY_HIGH = 'high';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'name',
         'description',
@@ -45,7 +45,7 @@ class Test extends Model
         'priority',
     ];
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $appends = [
         'required',
     ];
@@ -62,17 +62,15 @@ class Test extends Model
     /**
      * @return Attribute<bool, void>
      */
-    public function required(): Attribute
+    protected function required(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                return $this->priority !== self::PRIORITY_OPTIONAL;
-            },
+            get: fn () => $this->priority !== self::PRIORITY_OPTIONAL,
         );
     }
 
     /**
-     * @return BelongsTo<TestSuite, Test>
+     * @return BelongsTo<TestSuite, $this>
      */
     public function testSuite(): BelongsTo
     {
@@ -80,7 +78,7 @@ class Test extends Model
     }
 
     /**
-     * @return BelongsTo<User, Test>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

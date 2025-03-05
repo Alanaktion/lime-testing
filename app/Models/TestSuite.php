@@ -26,11 +26,11 @@ class TestSuite extends Model
     use HasFactory;
     use SoftDeletes;
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = ['name', 'description'];
 
     /**
-     * @return BelongsTo<Team, TestSuite>
+     * @return BelongsTo<Team, $this>
      */
     public function team(): BelongsTo
     {
@@ -38,7 +38,7 @@ class TestSuite extends Model
     }
 
     /**
-     * @return HasMany<Test>
+     * @return HasMany<Test, $this>
      */
     public function tests(): HasMany
     {
@@ -46,7 +46,7 @@ class TestSuite extends Model
     }
 
     /**
-     * @return HasMany<Run>
+     * @return HasMany<Run, $this>
      */
     public function runs(): HasMany
     {
@@ -54,7 +54,7 @@ class TestSuite extends Model
     }
 
     /**
-     * @return HasOne<Run>
+     * @return HasOne<Run, $this>
      */
     public function latestRun(): HasOne
     {
