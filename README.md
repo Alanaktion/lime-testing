@@ -4,9 +4,9 @@ A simple testing application designed to help you collect, manage, and run your 
 
 ## Requirements
 
-- PHP 7.4+
+- PHP 8.2+
 - Composer
-- Node LTS 14+
+- Node LTS 20+
 - MySQL 8 (or other Laravel-compatible RDBMS, untested)
 
 ## Setup
@@ -17,16 +17,16 @@ For a local or development environment, clone the repo, then run:
 
 ```bash
 composer install
-npm ci
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 For a production environment:
 
 ```bash
 composer install --no-dev
-npm ci
-npm run production
+pnpm install
+pnpm run build
 ```
 
 ### Application setup

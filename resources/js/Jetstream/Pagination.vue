@@ -49,14 +49,14 @@ defineProps({
                 </p>
             </div>
             <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <nav class="relative z-0 inline-flex rounded-md shadow-xs -space-x-px" aria-label="Pagination">
                     <component
                         v-for="(link, index) in paginator.links"
                         :key="index"
                         :is="link.url ? 'link' : 'span'"
                         :href="link.url"
                         :class="{
-                            'relative inline-flex items-center py-2 border text-sm font-medium': true,
+                            'relative inline-flex items-center py-2 border border-gray-200 text-sm font-medium': true,
                             'rounded-l-md': index === 0,
                             'rounded-r-md': index === paginator.links.length - 1,
                             'px-4': link.label.match(/^\d+$/),

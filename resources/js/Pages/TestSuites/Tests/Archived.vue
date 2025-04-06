@@ -18,7 +18,7 @@
 
         <div class="container py-4 lg:py-6">
             <div
-                class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg"
+                class="bg-white shadow-sm overflow-hidden border border-gray-200 sm:rounded-lg"
                 v-if="tests.length"
             >
                 <div

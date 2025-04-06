@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
+    <div class="bg-white shadow-sm overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6 py-4">
             <div>
                 <div class="flex flex-wrap items-center gap-4 mb-1">
@@ -7,7 +7,7 @@
                     <div
                         v-if="test.priority !== 'normal'"
                         :class="{
-                            'uppercase rounded py-1 px-2 text-xs font-semibold': true,
+                            'uppercase rounded-sm py-1 px-2 text-xs font-semibold': true,
                             'bg-gray-100': test.priority === 'optional',
                             'bg-red-100 text-red-800': test.priority === 'high',
                         }"
@@ -26,13 +26,13 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 sm:px-6 py-4">
                 <RadioGroup class="flex gap-2" v-model="result" v-if="!closed">
                     <RadioGroupLabel class="sr-only">Result</RadioGroupLabel>
-                    <RadioGroupOption class="focus:outline-none" v-slot="{ checked }" value="pass">
+                    <RadioGroupOption class="focus:outline-hidden" v-slot="{ checked }" value="pass">
                         <result-button result="pass" :selected="checked">Pass</result-button>
                     </RadioGroupOption>
-                    <RadioGroupOption class="focus:outline-none" v-slot="{ checked }" value="fail">
+                    <RadioGroupOption class="focus:outline-hidden" v-slot="{ checked }" value="fail">
                         <result-button result="fail" :selected="checked">Fail</result-button>
                     </RadioGroupOption>
-                    <RadioGroupOption class="focus:outline-none" v-slot="{ checked }" value="skip">
+                    <RadioGroupOption class="focus:outline-hidden" v-slot="{ checked }" value="skip">
                         <result-button result="skip" :selected="checked">Skip</result-button>
                     </RadioGroupOption>
                 </RadioGroup>

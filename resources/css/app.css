@@ -1,23 +1,36 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
 
-@layer components {
-    .container {
-        @apply max-w-7xl mx-auto sm:px-6 lg:px-8;
-    }
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
 
-    .btn {
-        @apply inline-flex items-center justify-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25 transition;
-    }
-    .btn--primary {
-        @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-300;
-    }
-    .btn--secondary {
-        @apply bg-white border-gray-300 text-gray-700 shadow-sm hover:text-gray-500 focus:border-sky-300 focus:ring-sky-200 active:text-gray-800 active:bg-gray-50;
-    }
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../vendor/laravel/jetstream/**/*.blade.php';
+@source '../../storage/framework/views/*.php';
 
-    .input {
-        @apply border-gray-300 focus:border-lime-500 focus:ring focus:ring-lime-300/50 rounded-md shadow-sm;
-    }
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+@utility container {
+  @apply max-w-7xl mx-auto sm:px-6 lg:px-8;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center px-4 py-2 border border-gray-200 rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-hidden focus:ring-3 disabled:opacity-25 transition;
+}
+
+@utility btn--primary {
+  @apply bg-gray-800 border-transparent text-white hover:bg-gray-700 active:bg-gray-900 focus:border-gray-900 focus:ring-gray-300;
+}
+
+@utility btn--secondary {
+  @apply bg-white border-gray-300 text-gray-700 shadow-xs hover:text-gray-500 focus:border-sky-300 focus:ring-sky-200 active:text-gray-800 active:bg-gray-50;
+}
+
+@utility input {
+  @apply border-gray-300 focus:border-lime-500 focus:ring-3 focus:ring-lime-300/50 rounded-md shadow-xs;
 }

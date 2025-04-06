@@ -29,7 +29,7 @@
                 </Link>
             </div>
 
-            <div class="bg-white shadow overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
+            <div class="bg-white shadow-sm overflow-hidden border border-gray-200 sm:rounded-lg mb-6">
                 <div v-if="tests.length">
                     <Draggable
                         v-model="testsModel"
